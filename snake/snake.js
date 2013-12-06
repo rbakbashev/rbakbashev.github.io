@@ -1,3 +1,6 @@
+// TODO
+// Game over
+// Check food spawn
 $(document).ready(function()
 {
 	var canvas = $("#canvas")[0];
@@ -5,12 +8,11 @@ $(document).ready(function()
 	var w = $("#canvas").width();
 	var h = $("#canvas").height();
 	var cw = 20;
-	var dir;
-	var foodBlock;
-	var score;
-	var snake_array;
+	var dir, foodBlock, score, snake_array;
 	var headImg = new Image();
-	headImg.src = 'tile.png';
+	headImg.src = 'head.png';
+	var bodyImg = new Image();
+	bodyImg.src = 'body.png';
 	game_loop = setInterval(paint, 61);
 
 	function init()
@@ -68,15 +70,19 @@ $(document).ready(function()
 		for(var i = 1; i < snake_array.length; i++)
 		{
 			var c = snake_array[i];
-			ctx.fillStyle = "green";
-			ctx.fillRect(c.x*cw, c.y*cw, cw, cw);
-			ctx.strokeStyle = "white";
-			ctx.strokeRect(c.x*cw, c.y*cw, cw, cw);
+			ctx.drawImage(bodyImg, c.x*cw, c.y*cw);
 		}
 		var head = snake_array[0];
-		ctx.drawImage(headImg, head.x*cw, head.y*cw);
-		ctx.strokeStyle = "black";
-		ctx.strokeRect(head.x*cw, head.y*cw, cw, cw);
+		ctx.save();
+		ctx.translate(head.x*cw, head.y*cw);
+		ctx.translate(cw/2, cw/2);
+		if      (dir == "right") ctx.scale(-1, -1);
+		else if (dir == "left")  ctx.scale( 1, -1);
+		else if (dir == "up")    ctx.rotate(Math.PI/2);
+		else if (dir == "down")  ctx.rotate(Math.PI*3/2);
+		ctx.rotate(3.14);
+		ctx.drawImage(headImg, -cw/2, -cw/2);
+		ctx.restore();
 
 		ctx.fillStyle = "red";
 		ctx.fillRect(foodBlock.x*cw, foodBlock.y*cw, cw, cw);
