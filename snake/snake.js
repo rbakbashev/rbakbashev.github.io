@@ -13,6 +13,8 @@ $(document).ready(function()
 	headImg.src = 'head.png';
 	var bodyImg = new Image();
 	bodyImg.src = 'body.png';
+	var tailImg = new Image();
+	tailImg.src = 'tail.png';
 	game_loop = setInterval(paint, 61);
 
 	function init()
@@ -67,7 +69,7 @@ $(document).ready(function()
 
 		snake_array.unshift(tail);
 
-		for(var i = 1; i < snake_array.length; i++)
+		for(var i = 1; i < snake_array.length-1; i++)
 		{
 			var c = snake_array[i];
 			ctx.drawImage(bodyImg, c.x*cw, c.y*cw);
@@ -76,12 +78,37 @@ $(document).ready(function()
 		ctx.save();
 		ctx.translate(head.x*cw, head.y*cw);
 		ctx.translate(cw/2, cw/2);
-		if      (dir == "right") ctx.scale(-1, -1);
-		else if (dir == "left")  ctx.scale( 1, -1);
-		else if (dir == "up")    ctx.rotate(Math.PI/2);
-		else if (dir == "down")  ctx.rotate(Math.PI*3/2);
-		ctx.rotate(3.14);
+		if      (dir == "right") ctx.scale( 1,  1);
+		else if (dir == "left")  ctx.scale(-1,  1);
+		else if (dir == "up")    ctx.rotate(Math.PI*3/2);
+		else if (dir == "down")  ctx.rotate(Math.PI/2);
 		ctx.drawImage(headImg, -cw/2, -cw/2);
+		ctx.restore();
+
+		var tail = snake_array[snake_array.length-1];
+		ctx.save();
+		ctx.translate(tail.x*cw, tail.y*cw);
+		ctx.translate(cw/2, cw/2);
+		var partBeforeTail = snake_array[snake_array.length-2];
+		var tailDir;
+		if (partBeforeTail.x == tail.x) {
+			if (partBeforeTail.y < tail.y) {
+				tailDir = "up";
+			} else {
+				tailDir = "down";
+			}
+		} else {
+			if (partBeforeTail.x < tail.x) {
+				tailDir = "right";
+			} else {
+				tailDir = "left";
+			}
+		}
+		if      (tailDir == "right") ctx.scale(-1,  1);
+		else if (tailDir == "left")  ctx.scale( 1,  1);
+		else if (tailDir == "up")    ctx.rotate(Math.PI*3/2);
+		else if (tailDir == "down")  ctx.rotate(Math.PI/2);
+		ctx.drawImage(tailImg, -cw/2, -cw/2);
 		ctx.restore();
 
 		ctx.fillStyle = "red";
