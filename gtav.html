@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<script src="gtav_files/jquery-1.js"></script>
+		<script src="gtav_files/jquery.js"></script>
+		<link rel="Stylesheet" type="text/css" href="gtav_files/dark.css">
+		<title>До GTA V осталось</title>
+	</head>
+
+	<body>
+		<h1>До GTA V осталось</h1>
+
+		<iframe width="560" height="315" src="https://www.youtube.com/embed/Mnhr7wn0noE" frameborder="0" allowfullscreen></iframe>
+
+		<iframe width="420" height="315" src="https://www.youtube.com/embed/-EQ6eHeBrhM" frameborder="0" allowfullscreen></iframe>
+
+		<div id="countdown_dashboard">
+			<div class="dash weeks_dash">
+				<p>недель</p>
+				<div class="digit"><div style="display: none;" class="top">0</div><div style="display: block;" class="bottom">0</div></div>
+				<div class="digit"><div style="display: none;" class="top">7</div><div style="display: block;" class="bottom">7</div></div>
+			</div>
+
+			<div class="dash days_dash">
+				<p>дней</p>
+				<div class="digit"><div style="display: none;" class="top">0</div><div style="display: block;" class="bottom">0</div></div>
+				<div class="digit"><div style="display: none;" class="top">3</div><div style="display: block;" class="bottom">3</div></div>
+			</div>
+			<div class="clear2"></div>
+			<div class="dash hours_dash">
+				<p>часов</p>
+				<div class="digit"><div style="display: none;" class="top">1</div><div style="display: block;" class="bottom">1</div></div>
+				<div class="digit"><div style="display: none;" class="top">1</div><div style="display: block;" class="bottom">1</div></div>
+			</div>
+
+			<div class="dash minutes_dash">
+				<p>минут</p>
+				<div class="digit"><div style="display: none;" class="top">4</div><div style="display: block;" class="bottom">4</div></div>
+				<div class="digit"><div style="display: none;" class="top">8</div><div style="display: block;" class="bottom">8</div></div>
+			</div>
+
+			<div class="dash seconds_dash">
+				<p>секунд</p>
+				<div class="digit"><div style="display: none;" class="top">3</div><div style="display: block;" class="bottom">3</div></div>
+				<div class="digit"><div style="display: block; overflow: hidden; height: 61.8928px; margin-top: 0px; margin-bottom: 0px; padding-top: 0px; padding-bottom: 0px;" class="top">7</div><div style="display: block; overflow: hidden; height: 21.937px;" class="bottom">8</div></div>
+			</div>
+		</div>
+
+		<script language="javascript" type="text/javascript">
+			jQuery(document).ready(function() {
+				$('#countdown_dashboard').countDown({
+					targetDate: {
+						'day': 		14,
+						'month': 	4,
+						'year': 	2015,
+						'hour': 	10,
+						'min': 		00,
+						'sec': 		00
+					}
+				});
+			});
+		</script>
+	</body>
+</html>
+
