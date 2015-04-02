@@ -26,7 +26,8 @@ h1 {
 
 #countdown_dashboard {
 	height: 96px;
-	margin-left: 175px;
+	display: table; /* hurr durr we r smert */
+	margin: 0 auto; /* we diesign */
 }
 
 .dash {
