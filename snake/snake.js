@@ -1,6 +1,3 @@
-// TODO
-// Game over
-// Check food spawn
 $(document).ready(function()
 {
 	var canvas = $("#canvas")[0];
@@ -10,11 +7,11 @@ $(document).ready(function()
 	var cw = 20;
 	var dir, foodBlock, score, snake_array;
 	var headImg = new Image();
-	headImg.src = 'head.png';
+	headImg.src = 'snake/head.png';
 	var bodyImg = new Image();
-	bodyImg.src = 'body.png';
+	bodyImg.src = 'snake/body.png';
 	var tailImg = new Image();
-	tailImg.src = 'tail.png';
+	tailImg.src = 'snake/tail.png';
 	game_loop = setInterval(paint, 61);
 
 	function init()
