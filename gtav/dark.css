@@ -1,0 +1,51 @@
+html, body {
+	font-family: sans-serif;
+	text-align: center;
+}
+
+h1 {
+	font-weight: normal;
+	line-height: 1.2
+
+	font-size:1.8em;
+	margin:0 0 .5em
+}
+
+.clear2 {
+	clear:both;
+	font-size:0;
+	height:20px;
+	overflow:hidden
+}
+
+#container {
+	margin: 0px auto;
+	width: 800px;
+	color: #eee;
+}
+
+#countdown_dashboard {
+	height: 96px;
+	display: table; /* hurr durr we r smert */
+	margin: 0 auto; /* we diesign */
+}
+
+.dash {
+	width: 138px;
+	height: 96px;
+	float: left;
+	margin-left: 2px;
+	padding-left: 13px;
+	position: relative;
+	color: #333;
+}
+
+.dash .digit {
+	font: bold 52pt sans-serif;
+	font-weight: bold;
+	float: left;
+	width: 59px;
+	text-align: center;
+	position: relative;
+}
+
