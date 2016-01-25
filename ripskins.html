@@ -1,0 +1,208 @@
+<DOCTYPE html>
+<html>
+	<head>
+		<meta charset='utf-8'>
+		<title>In the end, we only regret the chances we didn't take.</title>
+		<style>
+			body {
+				background: #050505;
+			}
+			div::after {
+				content: "";
+				background: url("http://i.imgur.com/Xd0bnCM.jpg") no-repeat;
+				background-size: cover;
+				opacity: 0.08;
+				top: 0;
+				left: 0;
+				bottom: 0;
+				right: 0;
+				position: absolute;
+				z-index: -1;
+			}
+			#ye {
+				position: absolute;
+				left: 0px;
+				top: 0px;
+			}
+			#irp {
+				font-family: sans-serif;
+				font-size: 19vw;
+				text-align: center;
+				line-height: 98vh;
+				width: 98.5vw;
+				height: 98vh;
+
+				-webkit-touch-callout: none;
+				-webkit-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+
+				-webkit-animation: color_change 4s infinite alternate;
+				-moz-animation: color_change 4s infinite alternate;
+				-ms-animation: color_change 4s infinite alternate;
+				-o-animation: color_change 4s infinite alternate;
+				animation: color_change 4s infinite alternate;
+			}
+			@-webkit-keyframes color_change {
+				from { color: #101010; }
+				to { color: #343434; }
+			}
+			@keyframes color_change {
+				from { color: #101010; }
+				to { color: #343434; }
+			}
+			#irp:hover { cursor: default;
+			}
+			.skin {
+				position: fixed;
+				z-index: 1000;
+				height: auto;
+				filter: grayscale(46%);
+				-webkit-filter: grayscale(46%);
+			}
+		</style>
+		<script> // http://www.kirupa.com/html5/the_falling_snow_effect.htm
+			var requestAnimationFrame = window.requestAnimationFrame ||
+				window.mozRequestAnimationFrame ||
+				window.webkitRequestAnimationFrame ||
+				window.msRequestAnimationFrame;
+
+			var transforms = ["transform", "msTransform", "webkitTransform",
+				"mozTransform", "oTransform"];
+			var transformProperty;
+			for (var i = 0; i < transforms.length; i++) {
+				if (typeof document.body.style[transforms[i]] != "undefined") {
+					transformProperty = transforms[i];
+				}
+			}
+			var skins = [];
+			var browserWidth;
+			var browserHeight;
+			var numberOfSkins = 89;
+			var resetPosition = true;
+
+			window.addEventListener("DOMContentLoaded", generateSkins, false);
+			window.addEventListener("resize", setResetFlag, false);
+
+			function Skin(element) {
+				this.element = element;
+				this.speed = 3+Math.random()*60;
+				this.xPos = getPosition(0, browserWidth);
+				this.yPos = -80;
+				this.counter = 0;
+				this.sign = Math.random() < 0.5 ? 1 : -1;
+				this.element.style.opacity = .15 + Math.random();
+				this.element.style.width = 50 + Math.random() * 105 + "px";
+			}
+
+			Skin.prototype.update = function () {
+				this.counter += this.speed / 5000;
+				this.xPos += this.sign * this.speed * Math.cos(this.counter) / 30;
+				this.yPos += Math.sin(this.counter) / 40 + this.speed / 30;
+				this.element.style[transformProperty] = "translate3d(" +
+					Math.round(this.xPos) + "px, " + Math.round(this.yPos) +
+					"px" + ", 0) rotateZ(" + this.counter*100 + "deg)";
+				if (this.yPos > browserHeight) {
+					this.yPos = -80;
+				}
+			}
+
+			function generateSkins() {
+				var originalSkin = document.querySelector(".skin");
+				var skinImgs = [
+					"https://steamcommunity-a.akamaihd.net/economy/image/fWFc82js0fmoRAP-qOIPu5THSWqfSmTELLqcUywGkijVjZYMUrsm1j-9xgEObwgfEh_nvjlWhNzZCveCDfIBj98xqodQ2CZknz58OOy2OwhkZzvFDa9dV7g2_Rn5DDQx7cl3a9qz87ITJBLmsoHEYbAtMNEeF8iBU_CFNVqrv09sgqJfKsTbqCu5iyrob2deCBC65Ctazz387ae9/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/Oopn2-pcvWM3ClBZPQNmE4LGrWquLLMj48SDQ9nlLrTzgVAgs0D7cZfTTKcbYzqdmsH2Laczsyflz4RR2PM5vvzDRCqiRPx4h6JIrRgpKYye170142b9PunOtUOcom2O8Zl_Lq8RvkuQkk26FxM2iI7brHe6YvgqvsLYEc_zaLSljxJ79BKxJZDES_0ULT-L2YTof6YypHizwokXlrgqv_U=/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/fWFc82js0fmoRAP-qOIPu5THSWqfSmTELLqcUywGkijVjZYMUrsm1j-9xgEObwgfEh_nvjlWhNzZCveCDfIBj98xqodQ2CZknz5vMeDsDz9-TQbDDKJRU8ow4QbrBSIN5cJnXcK7ue1RKFjutoCXYLkqN4weHcjSC6fQZQr1uExs1aNZKZOP9C-82SvtPm0UG028_uLwJKw/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/eoqIRq0euHkKFgL0LG9sUMLGQvfpbrY53tjR7siJJPezgb-99AL-a6rPHgoKDzDe2sEZsOBxtj3Y09b8yZ8z_bzDq7flBvliur4aAAlFI8_e11KopCT4JNTS5-6Rig_xp7OupfM472Gskxw6C0k2xt6cVeHhcfoxjd3bvtfPYfDmjfzi51_tNvrRRVQCQ2WdnYFV5bUg_WDaiJb_iJ0=/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/fWFc82js0fmoRAP-qOIPu5THSWqfSmTELLqcUywGkijVjZYMUrsm1j-9xgEObwgfEh_nvjlWhNzZCveCDfIBj98xqodQ2CZknz56P7fiDzRyTQXJVfdhX_ov5gnrDBgz5NNcWN6x_69Iewu6sNfBZ7MkZItOTJXTXKDQMwH7uB8-1fJbKsGP9i_t2CrsOztbCg2rpDy0hFXpmQ/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/fWFc82js0fmoRAP-qOIPu5THSWqfSmTELLqcUywGkijVjZYMUrsm1j-9xgEObwgfEh_nvjlWhNzZCveCDfIBj98xqodQ2CZknz52YOLkDyRufgHMAqVMY_YvywW4CHYh18R6RtKuyLYDLVWq6ZzFZrUqMItNHpbRUqCOYg-rvEMx1qdcLseIpy253Cy4Mz9fUxDi-ToHhqbZ7WBrCDQm/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/fWFc82js0fmoRAP-qOIPu5THSWqfSmTELLqcUywGkijVjZYMUrsm1j-9xgEObwgfEh_nvjlWhNzZCveCDfIBj98xqodQ2CZknz5wOuqzNQhlZxDWBLJYUOwF9QXTEyIw-sZcWN6x_69IcVrq4IDOZbh-ON5MGJTYWfaDb1r5vh0-gakPLJyA9Si5jCjsOzxYXw2rpDz-mi9RMQ/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/Hmx8DG60Wp19heGN_mvcp6Ygtr0qxFTdqUsylxqNlADXZ0v3N6gcj91c_XPYC4Apvift-iPbVNmvQDWFG5uDCtglX_0mrBuGzS35edtBkzi6MabiZ44awKNBBJ1al4YA6WFa6iGgDIPNLfZl6lOEO70Lr6h0gg7d4hZplQ2c1gSGOg35JPRW2IBBqHrUQtVr-2X7-HbYHoP0HWKXBc3RVYAkS_Yn/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/LOu-vCeUv-HYEmsmsLhAApSndA1j5LGhDNy4PFReCKXl4IlHfoj583jLd9iW2ByMjKAvSmr7saUK178uVUgfr-qinU1vjP76aLpz0pWSD52ItmRSLq7_vAbWjj8bVBOu4fmmSWiy7fd4gEvbkpAViNK3MRs_-fv-WovpbxxOGPWwtckRbdy5oS7SJNTJxBydyuI2HG3yqfQMlqEzHQ==/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/6u_ub3aFuNxmL12ncMmlKFKjJN4y9bacsuGOvZQv7Y8j5NmUL5n-zsb2QVlWqfmmSqR_mTvqtpi06omvlTn6hSymzZ4-nfnH1odFU1Xj6rdOsjSBf7_4gbjruLfUNf-PHeSQpDqd9cTMvVZpWufHsFuzNfFks_6Zo6vQ649l_dlx6MqdPs2-npG-FVUM4PmyXrNmzzC4rJTk54W9jT6u3Hq5h4s2mw==/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/fWFc82js0fmoRAP-qOIPu5THSWqfSmTELLqcUywGkijVjZYMUrsm1j-9xgEObwgfEh_nvjlWhNzZCveCDfIBj98xqodQ2CZknz5wOuqzNQhgZxD9AK1hWPoq5ATpGxgi4MZwUYOJ-7IBIUjx4NHHOrV6OYtJS5KBW_GOYwqo7hlq0fJUepDd8yrs2i_gPW8PCRG5rHVExrFjce9jZA/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/ekx29FAuFgRm53zYsdMpSsIAvEUUXhhEsimvwlU1Ye2zR0EPCTJQFsY-YCaXs3XE2gfnAh1BGEC0IqjQVCN257wFVQUYNlcf1k9kLJT5ZtXeEawaWRRWWbgjmcgVL3PtjUxdCQ4IQwL9f2oln_hL2MMToEEAEwEbsXX0lUMlcbrmSFRVHW4UR5soMHGY_yyFmUz5U0xJA0i2LvPBS2hl5rU=/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/fWFc82js0fmoRAP-qOIPu5THSWqfSmTELLqcUywGkijVjZYMUrsm1j-9xgEObwgfEh_nvjlWhNzZCveCDfIBj98xqodQ2CZknz5wOuqzNQhhfg3SPqFTY_E15BjgDDUN-M9iR9LiyLcPLlSrqoHHZeYsMdseHpLWC6OPZFqr7B4806haL5WO9H6-2C_saGkNXRu9rj8a2LjQw8-TVFQ/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/WnQe6jZVm0ox33mlkXDV3-I41FtyJZUK5RGqv3WWnXiTfykRb0ndWJEGZVu3EIlR-j-PHHs6lQ7jGq2tdICKcpw9PRt-TdpRgXdhUbRamkD-KcQEP2_bF-8bnL8slbZ-h004CWhzzk6cRWlChVOBRuI4jk8uON5T4RHw6z-GjH_CcGBOLRmeDsJNNFbrCtFAuirFSH84jVa1QqHwK4uO/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/1SOABhiAH8G3QULGDuKJUW1vSrdc8BGBY4-R3OoEwfYcKLf9QZxZ0xeYXjgogtXfdWgR8FXvEYVlhJbO6xLW_BNqo_dQmF7aB-laMivIxs5xflroEbpfnGmFp8i3B-rgFCmi_FWcWekQw2IiNt3r3HVySqEPrVuzaoKf1bBZjatOJ_-lAZgT10aBXm4hyYWeNyNY9VPqDohij86E8BOMpkQj9KMDyQXGHdE=/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpovbSsLQJfw-bbeQJD4eOskYKZlsj4OrzZgiVQuJxw3OrHptitigXk-RVkYzz7I4SXdFVtZlmE-lK7xeq6gJa-u53K1zI97VbkI_gt/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/KZrvJQobc-UDF4O4EBp0_ZHWJZROa32l19lQovT8PFrgkdjeUwc196POn0Y2eihzidF-00d0faHR0lew9eorUO_TzNRCAzL-s7-bTDUwO2KNxzXLAyEzuN3TZqe_7i9T5KPJ3HsRJPOrhY92OScodZb9PY0TLCbm1NkL9ei9KQzkypCJQVF_paXYmBE4ZnBiy8Rk3UBwZfrR2Aul6-t_Ca-MxtY=/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/fWFc82js0fmoRAP-qOIPu5THSWqfSmTELLqcUywGkijVjZYMUrsm1j-9xgEObwgfEh_nvjlWhNzZCveCDfIBj98xqodQ2CZknz56I_OKOC5YaAvGCKFdDso2_Q_kHWlkv8NiAYTipOlUegrusYTPYeQlNttLGcjYCPGGYlv47Uk7gqRfJsPYvmqxiqGYFJeu/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/a-8reBN0Jp571zBiSM7yltOj4clXBCjerxnjeKwoujGi5ByDSmhgjNsOLJxurq4Yy6S6jl4bKNqpEuRqrT6tO62mCIlbbGeFy38olm3kvQnPsvGWGk5mw6UT1X_jNq8nnOoZs1tsf4jMfz-Gb_KqN9e-8tEZBWHSrkjuf-E_-Tbz6g-KWDsn3NwXLMA6sfwMi-6kiFkbPoP-RL8g5zjgJK3u/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/fWFc82js0fmoRAP-qOIPu5THSWqfSmTELLqcUywGkijVjZYMUrsm1j-9xgEObwgfEh_nvjlWhNzZCveCDfIBj98xqodQ2CZknz56P7fiDzZqTQbDDKJRU8ow4QbrBSIN5cJnXcK7ueIFeA_n5oHEYbYrNIxMGseBUv-GYlv070s406APJseLqXzniSq9azgUG0281zHKmF0/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/fWFc82js0fmoRAP-qOIPu5THSWqfSmTELLqcUywGkijVjZYMUrsm1j-9xgEObwgfEh_nvjlWhNzZCveCDfIBj98xqodQ2CZknz5wOuqzNQhgZxD9AK5hSPw98RrTBjUz5sBma9u_8LMSZwjqvYKSMOElNt5KHpPVD_OCN1_-6EM90_NfLJKJpy25jivqbmoCXUH1ujVT4bmJ10w/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpoo6m1FBRp3_bGcjhQ09-jq5WYh8j_OrfdqWhe5sN4mOTE8bP4jVC9vh5yYGr7IoWVdABrYQ3Y-1m8xezp0ZTtvpjNmHpguCAhtnndzRW10x9KOvsv26KUE4Zjjg/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/fWFc82js0fmoRAP-qOIPu5THSWqfSmTELLqcUywGkijVjZYMUrsm1j-9xgEObwgfEh_nvjlWhNzZCveCDfIBj98xqodQ2CZknz56P7fiDzRyTRTDD7RWWecF9QO4Xhg-4cBrQJng9ewFcQ7vvIGUNuZ-Yt9NGcPRC6KBbw_8uxg5haVee5Tf8yi-2H69JC5UDMSo-YI1/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/fWFc82js0fmoRAP-qOIPu5THSWqfSmTELLqcUywGkijVjZYMUrsm1j-9xgEObwgfEh_nvjlWhNzZCveCDfIBj98xqodQ2CZknz52YOLkDzRyTQmWAPRhWeMz-DfoCC4_8chcWN6x_69IKg7vvNCXMbUuY9gYF8nQWKXXNwD66Ro-g6UOfcPYqS7q2C3ha2kLXQ2rpDxuFuLNSA/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/Vf-3tiRDK859mA_2Ei9Rmu2zfQdgMyWOqVbc7PbJGT2c9IBNfV9t3N1BEwg0Tw0U9bQmQGksJYqvXdv-998ON5O2lEdsW2rVzTAXAjcFHgXxom1YLXlrk6Nc6ua20ws9ovKRUGtXfdDNMBgeBgYDFuC0fSg4c3iGrV7q4L3eBC2Qt8YVbFx6jttbFFc_V1VS5_JvRG8qOYH0BNS44I5eb8X_kURoCXmB3wleFzcH/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/k_vItCZ5xfgZWOOps94vDSu3AgViCcu4zZYws1c4Z6pa8P9Pf2WD6rmB_1eVvnODM7BZQmsWy7zLnTehVi5woFWy60VuYYTjqfD7XZb0YJI3phJaL0OFpcecBrMOO0yuVsLsUn1tgeO48P5Kmed9rC-qER0sCNLiy8Rot0t9dq0C-btGamaVuOXL-AHJqCHEIfAURTxE0OPLwW23HXM9v1X6/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/C_lHBJF0Qvni1sDtX16XWrO1jbXVBEy5NhgT97u43_3C8nD_yGgE60IP3BN5PsvUq7LW8twbTL0wExTluq7I982wZPXZbAPiUn7YGXp02MWvpJ3qmE4CpDwSJePmu_TryvNl_txoBNFHUOAJZ2H116-gkKuDThCnDBEf8vy-xrbBpzCp2jkV6xcV3U8kcJzBuaDO_NwbBbE2Ghnypfyf-5H6YaOHb0DrCFHRGw==/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/_mE7661BSYHuXkYGxaalrkYt8VrpMUfBOpCVHCFA7Qk3agwQ9F0Pk06HWvjjxvkgXiqqHeAuR8U8m5IOIFb6AzgoGBrlWQiaXvZe8uCM6jFaPOEFpHsJ3DCaoxA7UqgzJW4QGu1bGIR1yFTI9Iz6Ik8G4UuhdTfANpOUCSFR_w1iMkwdtAgbkkvLCKe62Kk0T2DnH-Z6XM1tzZ1EbAOsWmY-T0m7Fg2YTQ==/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/fWFc82js0fmoRAP-qOIPu5THSWqfSmTELLqcUywGkijVjZYMUrsm1j-9xgEObwgfEh_nvjlWhNzZCveCDfIBj98xqodQ2CZknz56I_OKMTpYcxPSPqdSU-cjywTlDi8mppQ3DNK38usAfFjr4NPONbctONBKF8LWXPKOMl3560I_0ahVLZyJqSrxnXO-U2MJuEI/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/be98G9CWStS8rgZ1WCQYn9WjtqqU5kSUaGDVb7zCUDik5EvgiYoMxhx3Got-REQRzaTt7Z35RJBua9J9vdRHMqumX-qYjgvPDAYegX0OVwDJsqb12awKiWJq42_lwXs1vNZZ45-CIdARNAmIdjRJCNq_tvSY-VPLOjyFOPDXFzzwuwO9zYlKlE5tSN13XkBSi7b76sv7WJtrN4s8vMFKOg==/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/jNu6wQM-Cc0bKPZ1o0Bo3TSXcHBHTgeNz-Ylb0emIHpF0I06WiJP37vx6ouFIDRTLJArN05RB4nJ7SJ9RrA3cEqSmTBLJkjWq4DugYZqJ0IohmAvCgRJkMXsE2NdtGVAR8iiOBkYXMm2suaSt2IwRzWWaS4fBBmEy-Z-PgrnNyhAj5sxTiEKi-m5vdeNaWUabtFmZU0DGYWesC9qR6U6eA==/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXU5A1PIYQh5hlcX0nvUOGsx8DdQBJjIAVHubSaOARhwaGYP2wXuY61w4Ldw_PyNuLUwz8D6ZZz3bqR8Ij30ASx-UI4MDr1cISRcVIgIQaHJOvxFIM/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/JYpjfmT2ZLxk-BcG-ncCZZ3Gqc8ghmr8sDbEHB6RSsLsgVSFPeoirsQhC_jcF17rhcHyiCmZavi2PcMOH4ddyOPDQI8s7iWn1FAP8t9dTfqB17mQbcwk4bo88h9ZmFHJ0p9UtT7uIK7_fAD4w0xg7ofQvNFFxCD1vCfAUwTWWpe72BXTf-xn-ZU4WaLVClypk4XoinvMcvO3NM8cCNYOk7_ZRY9k_z6s/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/5fdvrLs2tbfHw_ExWsxtW127pR3_Rrv3Ew0iK74qJfws_FhX4irzpWca7c98rDHVRbz-WvZZu_MVBiU5vzwy9iO-TF3zLvSsd2vpxX_mIsRBqrVCsgz16hkHFD71OmjGLuR3TPAsuJ9iR-fJfOwm-lmmtgWxR637Qg8pc_I7N68roRkKpXbj-GVQvcV35TXBVP60CKYP96sTXCpz8Wp_6SP2/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/fWFc82js0fmoRAP-qOIPu5THSWqfSmTELLqcUywGkijVjZYMUrsm1j-9xgEObwgfEh_nvjlWhNzZCveCDfIBj98xqodQ2CZknz54LrTgMQhkZzvBVvVfEeEz8w3-Nio37M52WZmw8-kFfAXu5ovEM7l-NI1FGcWDCPeOYQH5vE441aZYeZTcpSvt2im4JC5UDEMd6wFp/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/fWFc82js0fmoRAP-qOIPu5THSWqfSmTELLqcUywGkijVjZYMUrsm1j-9xgEObwgfEh_nvjlWhNzZCveCDfIBj98xqodQ2CZknz5rbbOKMyJYYl2STKFNVfw3-x7TBS414NMtBNS3oL1RL1_vt4CVOrh_NYsfGsDWCaXSMwD_uEg71aRVLJPYqHvn1TOpZDkInpfDYw/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpovbSsLQJfw-bbeQJD7eOwlYSOqPv9NLPF2G0Gu8Eo2bDApt-g0FXl-UU6NTuhI9SccVU3N1DXqFjsxua-g8W7tMvXiSw0K6R8VrQ/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/ZmVcokXlXaul8kQLQPYaDN4plhMBlVPrcTyXEaQQUquvbmtZHPkbuQUrWPVmlkaCxi7NVAiKU-93N5ADpQZFoaAsf1MN_RywFVpc_2XcVZPCOIZMTN8d9ns2oRvkCkCrkWV3XxvDCLE-f174edh4nt86ihcV2ETgIT6cFO5TR_2qNS8BDqQL7lFnCPto2kaQhD7TB1qLROMmOptCvk1WoKk=/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot7HxfDhjxszJemkV08u_mpSOhcjnI7TDglRc7cF4n-SPpI-iigLg80ZvZzryd4_GI1Q6Yg3VqFe4w-y90JLo753NzXtmsnEl4mGdwUIuRPhSEw/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/fWFc82js0fmoRAP-qOIPu5THSWqfSmTELLqcUywGkijVjZYMUrsm1j-9xgEObwgfEh_nvjlWhNzZCveCDfIBj98xqodQ2CZknz56P7fiDzRyTRDQCKJLSPAF9QO4Xhg-4cBrQJmwp-MDeQ2654PGOuQsOYpOTpbQWPaHMlr-6R87gakLfZSOonjmjnm4JC5UDL-QJASf/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/Hed4mmNURtK24gbwXTd81aWrsisnJEiSYizV6rnRNHLU7E9hOkgAwBY7Gg57VyBbvazpbC47SJZkJ9L4uMcjeNuuW2srTAfJBkoeBHgdM0q5uqJ0am4Gj2gm4-r8lndI1vRgbyYZRfoAYBsDcwoeRqi7ry5wJVLNNnCMva7DciDW5AY2LBgXkEIhQVJwTnRJ_Lz-ayxpX5xheIi_oppuZ9vm/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/fWFc82js0fmoRAP-qOIPu5THSWqfSmTELLqcUywGkijVjZYMUrsm1j-9xgEObwgfEh_nvjlWhNzZCveCDfIBj98xqodQ2CZknz59PfWwIzJxdwr9ArVhWvws8RvpHyI819JxVta4yLMHM12t4O2aaud0dMZIGsbZXPDSZAqrux05gKJZfJCI8iLu3i27PT8NWxHi_jpSmO6AurBtnC9IFJxGyCHn/512fx388f",
+					"https://steamcommunity-a.akamaihd.net/economy/image/fWFc82js0fmoRAP-qOIPu5THSWqfSmTELLqcUywGkijVjZYMUrsm1j-9xgEObwgfEh_nvjlWhNzZCveCDfIBj98xqodQ2CZknz52NeDkYAhmfzvPAKMPDMo39QTtCi87_MJcWN6x_69IcAS754DFNbguMt0ZHpOBX6XTZA7_7Ug41vBeLcSAoi28iy_qPTxYCA2rpDxT7dQN7w/512fx388f"
+				];
+				var numSkinImgs = 42;
+				var skinContainer = originalSkin.parentNode;
+				browserWidth = document.documentElement.clientWidth;
+				browserHeight = document.documentElement.clientHeight;
+				for (var i = 0; i < numberOfSkins; i++) {
+					var skinClone = originalSkin.cloneNode(true);
+					skinClone.src = skinImgs[Math.floor(Math.random() * (numSkinImgs + 1))];
+					skinContainer.appendChild(skinClone);
+					var skinObject = new Skin(skinClone);
+					skins.push(skinObject);
+				}
+				skinContainer.removeChild(originalSkin);
+				moveSkins();
+			}
+
+			function moveSkins() {
+				for (var i = 0; i < skins.length; i++) {
+					skins[i].update();
+				}
+				if (resetPosition) {
+					var w = window, d = document, e = d.documentElement,
+						g = d.getElementsByTagName('body')[0];
+					browserWidth  = w.innerWidth || e.clientWidth || g.clientWidth,
+					browserHeight = w.innerHeight|| e.clientHeight|| g.clientHeight;
+					for (var i = 0; i < skins.length; i++) {
+						skins[i].xPos = getPosition(0, browserWidth);
+						skins[i].yPos = getPosition(80, browserHeight);
+					}
+					resetPosition = false;
+				}
+				requestAnimationFrame(moveSkins);
+			}
+
+			function getPosition(offset, size) {
+				return Math.round(-1*offset + Math.random() * (size+2*offset));
+			}
+
+			function setResetFlag(e) {
+				resetPosition = true;
+			}
+		</script>
+	</head>
+	<body>
+		<audio id="woop" src="the_eternal.mp3" autoplay>no audio tag. get new browser</audio>
+		<div id="ye">
+			<img class="skin">
+		</div>
+		<div id="irp"><i>RIP SKINS</i></div>
+	</body>
+</html>
+
