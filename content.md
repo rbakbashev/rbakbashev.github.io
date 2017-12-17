@@ -2,7 +2,7 @@
 
 Ruslan Akbashev.
 
-Computer science student at the Higher School of Economics, 19 y.o., Moscow, Russia.
+Computer science student at the Higher School of Economics, 19 y.o., Moscow, Russia. Contact: rbakbashev at gmail dot com.
 
 # Things I've worked on:
 
