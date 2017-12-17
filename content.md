@@ -2,7 +2,7 @@
 
 Ruslan Akbashev.
 
-Computer science student at the Higher School of Economics, 18 y.o., Moscow, Russia.
+Computer science student at the Higher School of Economics, 19 y.o., Moscow, Russia.
 
 # Things I've worked on:
 
@@ -11,8 +11,6 @@ Computer science student at the Higher School of Economics, 18 y.o., Moscow, Rus
 ## woof
 [github.com/ruslashev/woof](https://github.com/ruslashev/woof) - C++, Erlang
 
-(currently closed-source due to university's anti-plagiarism system)
-
 A multiplayer game with homemade reliable UDP protocol for communication between a C++ client and an Erlang server. Part of coursework for university.
 
 ## p2c2
@@ -20,21 +18,20 @@ A multiplayer game with homemade reliable UDP protocol for communication between
 
 Pascal to C code converter. Coursework for university.
 
+## sythin
+[github.com/ruslashev/sythin](https://github.com/ruslashev/sythin) - C++
+
+(wip) Programmable software music synthesiser. See also [sythin-0.2](https://github.com/ruslashev/sythin-0.2) (C++, Lua).
+
 ## poly2tri
 [github.com/ruslashev/poly2tri](https://github.com/ruslashev/poly2tri) - C++
 
-Interactive polygon triangulation desktop program on OpenGL. University homework.
+Interactive polygon triangulation visualization desktop program using OpenGL. University homework.
 
 ## cdepgraph
 [github.com/ruslashev/cdepgraph](https://github.com/ruslashev/cdepgraph) - Haskell
 
 C(++) source files dependency graph generator 
-
-## sythin2
-[github.com/ruslashev/sythin2](https://github.com/ruslashev/sythin2) - C++, Lua
-
-Programmable software music synthesiser.
-
 
 ## lovq
 [github.com/ruslashev/lovq](https://github.com/ruslashev/lovq) - Lua
