@@ -2,7 +2,11 @@
 
 Ruslan Akbashev.
 
-Computer science student at the Higher School of Economics, 19 y.o., Moscow, Russia. Contact: rbakbashev at gmail dot com.
+Computer science student at the Higher School of Economics, 19 y.o., Moscow, Russia.
+
+## Contact
+
+[rbakbashev@gmail.com](mailto:rbakbashev@gmail.com), [linkedin.com/in/rbakbashev](https://www.linkedin.com/in/rbakbashev/)
 
 # Things I've worked on:
 
@@ -31,7 +35,7 @@ Interactive polygon triangulation visualization desktop program using OpenGL. Un
 ## cdepgraph
 [github.com/ruslashev/cdepgraph](https://github.com/ruslashev/cdepgraph) - Haskell
 
-C(++) source files dependency graph generator 
+C(++) source files dependency graph generator
 
 ## lovq
 [github.com/ruslashev/lovq](https://github.com/ruslashev/lovq) - Lua
