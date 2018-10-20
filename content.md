@@ -1,12 +1,10 @@
-# Who I am
+# Who am I
 
-Ruslan Akbashev.
+Ruslan Akbashev. Computer science student at the Higher School of Economics. 20 y.o., Moscow, Russia.
 
-Computer science student at the Higher School of Economics, 19 y.o., Moscow, Russia.
+## Contact & Links
 
-## Contact
-
-[rbakbashev@gmail.com](mailto:rbakbashev@gmail.com), [linkedin.com/in/rbakbashev](https://www.linkedin.com/in/rbakbashev/)
+[rbakbashev@gmail.com](mailto:rbakbashev@gmail.com), [github.com/ruslashev](https://github.com/ruslashev), [linkedin.com/in/rbakbashev](https://www.linkedin.com/in/rbakbashev/)
 
 # Things I've worked on:
 
@@ -25,7 +23,7 @@ Pascal to C code converter. Coursework for university.
 ## sythin
 [github.com/ruslashev/sythin](https://github.com/ruslashev/sythin) - C++
 
-(wip) Programmable software music synthesiser. See also [sythin-0.2](https://github.com/ruslashev/sythin-0.2) (C++, Lua).
+Programmable software music synthesiser. See also [sythin-0.2](https://github.com/ruslashev/sythin-0.2) (C++, Lua).
 
 ## poly2tri
 [github.com/ruslashev/poly2tri](https://github.com/ruslashev/poly2tri) - C++
@@ -44,7 +42,5 @@ Software rasterizer that currently mimics OpenGL. Unfinished project.
 
 ---
 
-unlisted repos: [github.com/ruslashev](https://github.com/ruslashev)
-
-[and ton more unreleased programs :)](https://gist.github.com/ruslashev/d9a9f22e2bb6c39c67f8d0628ddf79e0)
+[and ton more unreleased programs](https://gist.github.com/ruslashev/d9a9f22e2bb6c39c67f8d0628ddf79e0).
 
