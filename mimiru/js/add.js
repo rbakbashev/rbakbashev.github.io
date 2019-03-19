@@ -1,8 +1,8 @@
 var deepArtEffectsClient = apigClientFactory.newClient({
     // these are free test plan keys, so don't get too excited
-    apiKey: 'gsNkBjFDCQ8cFBoXnuwUwe5m0TTarpW1jUKCVYh8',
-    accessKey: 'AKIAJ2U4MSZCRQQOW7RA',
-    secretKey: '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',
+    apiKey: 'LmsgDhQDMq5XggJ46B7cV5InWBAAU2pC8vTlXzNV',
+    accessKey: 'AKIAI56FEBATEKI2Y5YA',
+    secretKey: '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',
 });
 
 var imageBinary;
