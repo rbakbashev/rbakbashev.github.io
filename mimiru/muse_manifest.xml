@@ -1,0 +1,333 @@
+<manifest alg="2" build="2017.0.2.363" opt="false" iceEnabled="true" iceMarkupVersion="2" iceEnabledOptions="link,responsive,cachebuster,textStyling" exportTarget="other" domain="www.PM.com" resolutions="1x" timestamp="1552909284114">
+  <folder name="css">
+    <file name="site_global.css" crc="4175333573"/>
+    <file name="master_a-master.css" crc="535903461" ref="partners:index:reviews:services:about-us"/>
+    <file name="nomq_preview_master_a-master.css" crc="44066824" ref="partners:index:reviews:services:about-us"/>
+    <file name="partners.css" crc="107722878" ref="partners"/>
+    <file name="nomq_partners.css" crc="4136722514" ref="partners"/>
+    <file name="iefonts_partners.css" crc="3824530138" ref="partners"/>
+    <file name="index.css" crc="257783310" ref="index"/>
+    <file name="nomq_index.css" crc="382236722" ref="index"/>
+    <file name="iefonts_index.css" crc="3824530138" ref="index"/>
+    <file name="reviews.css" crc="351776612" ref="reviews"/>
+    <file name="nomq_reviews.css" crc="4262520809" ref="reviews"/>
+    <file name="iefonts_reviews.css" crc="3824530138" ref="reviews"/>
+    <file name="services.css" crc="290531915" ref="services"/>
+    <file name="nomq_services.css" crc="292166919" ref="services"/>
+    <file name="iefonts_services.css" crc="3824530138" ref="services"/>
+    <file name="about-us.css" crc="4022649573" ref="about-us"/>
+    <file name="nomq_about-us.css" crc="148923716" ref="about-us"/>
+    <file name="iefonts_about-us.css" crc="3824530138" ref="about-us"/>
+  </folder>
+  <folder name="scripts">
+    <file name="jquery-1.8.3.min.js" crc="209076791" ref="index:services:partners:about-us:reviews"/>
+    <file name="museutils.js" crc="4232573551" ref="index:services:partners:about-us:reviews"/>
+    <file name="whatinput.js" crc="86476730" ref="index:services:partners:about-us:reviews"/>
+    <file name="museconfig.js" crc="3849126041" ref="index:services:partners:about-us:reviews"/>
+    <file name="jquery.musemenu.js" crc="38860304" ref="index:services:partners:about-us:reviews"/>
+    <file name="jquery.watch.js" crc="3844535323" ref="index:services:partners:about-us:reviews"/>
+    <file name="jquery.musepolyfill.bgsize.js" crc="3880853905" ref="index"/>
+    <file name="webpro.js" crc="3770351119" ref="index:services:partners:about-us:reviews"/>
+    <file name="musewpslideshow.js" crc="4244742588" ref="index:services"/>
+    <file name="jquery.museoverlay.js" crc="432750910" ref="index:services"/>
+    <file name="touchswipe.js" crc="3912873526" ref="index:services"/>
+    <file name="form_check.php" crc="3841221102" ref="index"/>
+    <file name="form_throttle.php" crc="4048049783" ref="index"/>
+    <file name="form_process.php" crc="3899230280" ref="index"/>
+    <file name="form-u14524.php" crc="4179433232" ref="index"/>
+    <file name="musewpdisclosure.js" crc="347705465" ref="index:services:partners:about-us:reviews"/>
+    <file name="html5shiv.js" crc="4241844378" ref="index:services:partners:about-us:reviews"/>
+    <file name="jquery.museresponsive.js" crc="433634197" ref="index:services:partners:about-us:reviews"/>
+    <file name="require.js" crc="4234670167" ref="index:services:partners:about-us:reviews"/>
+    <file name="form-u15395.php" crc="394236175" ref="services"/>
+    <file name="form-u18018.php" crc="4029166814" ref="services"/>
+    <file name="form-u18258.php" crc="4035171702" ref="services"/>
+    <file name="form-u11339.php" crc="4220316982" ref="services"/>
+    <file name="form-u14814.php" crc="472135849" ref="partners"/>
+    <file name="form-u15104.php" crc="504897095" ref="about-us"/>
+  </folder>
+  <folder name="images">
+    <file name="a-master-favicon.ico" crc="150830930" ref="index"/>
+    <file name="logo_с_hse_black_e.png" crc="3786413987" seo="true" ref="index:services:partners:about-us:reviews">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="reviews" alt=""/>
+      <caption webpage="reviews" alt=""/>
+      <caption webpage="reviews" alt=""/>
+      <caption webpage="reviews" alt=""/>
+      <caption webpage="reviews" alt=""/>
+      <caption webpage="reviews" alt=""/>
+      <caption webpage="reviews" alt=""/>
+      <caption webpage="reviews" alt=""/>
+      <caption webpage="reviews" alt=""/>
+      <caption webpage="reviews" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="services" alt=""/>
+      <caption webpage="services" alt=""/>
+      <caption webpage="services" alt=""/>
+      <caption webpage="services" alt=""/>
+      <caption webpage="services" alt=""/>
+      <caption webpage="services" alt=""/>
+      <caption webpage="services" alt=""/>
+      <caption webpage="services" alt=""/>
+      <caption webpage="services" alt=""/>
+      <caption webpage="services" alt=""/>
+    </file>
+    <file name="icons8-staff-filled-100.png" crc="3793035391" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="icons8-task-100.png" crc="148814198" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="icons8-statistics-100.png" crc="3955754121" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="icons8-documents-100.png" crc="4255640423" seo="true" ref="index">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="успех.jpg" crc="4014839462" ref="index">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="миэм.jpg" crc="513316837" ref="index">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="статистика.jpg" crc="4208500874" ref="index">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="image3.jpg" crc="3994114039" ref="index">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="успех-u13208-a-fr.jpg" crc="3983840397" ref="index"/>
+    <file name="миэм-u13869-a-fr.jpg" crc="349074102" ref="index"/>
+    <file name="icons8-vkcom-100.png" crc="505975977" seo="true" ref="index:services:partners:about-us:reviews">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="reviews" alt=""/>
+      <caption webpage="reviews" alt=""/>
+      <caption webpage="reviews" alt=""/>
+      <caption webpage="reviews" alt=""/>
+      <caption webpage="reviews" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="services" alt=""/>
+      <caption webpage="services" alt=""/>
+      <caption webpage="services" alt=""/>
+      <caption webpage="services" alt=""/>
+      <caption webpage="services" alt=""/>
+    </file>
+    <file name="icons8-instagram-old-100.png" crc="495762918" seo="true" ref="index:services:partners:about-us:reviews">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="reviews" alt=""/>
+      <caption webpage="reviews" alt=""/>
+      <caption webpage="reviews" alt=""/>
+      <caption webpage="reviews" alt=""/>
+      <caption webpage="reviews" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="services" alt=""/>
+      <caption webpage="services" alt=""/>
+      <caption webpage="services" alt=""/>
+      <caption webpage="services" alt=""/>
+      <caption webpage="services" alt=""/>
+    </file>
+    <file name="icons8-facebook-100.png" crc="354981391" seo="true" ref="index:services:partners:about-us:reviews">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="reviews" alt=""/>
+      <caption webpage="reviews" alt=""/>
+      <caption webpage="reviews" alt=""/>
+      <caption webpage="reviews" alt=""/>
+      <caption webpage="reviews" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="about-us" alt=""/>
+      <caption webpage="services" alt=""/>
+      <caption webpage="services" alt=""/>
+      <caption webpage="services" alt=""/>
+      <caption webpage="services" alt=""/>
+      <caption webpage="services" alt=""/>
+    </file>
+    <file name="icon_menu.gif" crc="3885901089" ref="index">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="icon_menu_close.gif" crc="4194633723" ref="index">
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+      <caption webpage="index" alt=""/>
+    </file>
+    <file name="blank.gif" crc="4208392903" ref="index:services:partners:about-us:reviews"/>
+    <file name="5b334610deb59.png" crc="4105714317" seo="true" ref="partners">
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+    </file>
+    <file name="5b33472176330.png" crc="54731204" seo="true" ref="partners:reviews">
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="reviews" alt=""/>
+      <caption webpage="reviews" alt=""/>
+      <caption webpage="reviews" alt=""/>
+      <caption webpage="reviews" alt=""/>
+      <caption webpage="reviews" alt=""/>
+    </file>
+    <file name="1280px-yandex_logo_rusvg.png" crc="417871300" seo="true" ref="partners:reviews">
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="reviews" alt=""/>
+      <caption webpage="reviews" alt=""/>
+      <caption webpage="reviews" alt=""/>
+      <caption webpage="reviews" alt=""/>
+      <caption webpage="reviews" alt=""/>
+    </file>
+    <file name="logo_2013_google.png" crc="508390989" seo="true" ref="partners">
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+      <caption webpage="partners" alt=""/>
+    </file>
+    <file name="5b334610deb59175x175.png" crc="4072600307" seo="true" ref="partners">
+      <caption webpage="partners" alt=""/>
+    </file>
+    <file name="5b334610deb59124x124.png" crc="4129002069" seo="true" ref="partners">
+      <caption webpage="partners" alt=""/>
+    </file>
+    <file name="5b334610deb5997x97.png" crc="3892071512" seo="true" ref="partners">
+      <caption webpage="partners" alt=""/>
+    </file>
+    <file name="5b334610deb59136x137.png" crc="91034130" seo="true" ref="reviews">
+      <caption webpage="reviews" alt=""/>
+    </file>
+    <file name="5b334610deb59117x117.png" crc="3861658679" seo="true" ref="reviews">
+      <caption webpage="reviews" alt=""/>
+    </file>
+    <file name="5b334610deb5988x88.png" crc="3858746733" seo="true" ref="reviews">
+      <caption webpage="reviews" alt=""/>
+    </file>
+    <file name="5b334610deb5962x62.png" crc="9961628" seo="true" ref="reviews">
+      <caption webpage="reviews" alt=""/>
+    </file>
+    <file name="5b334610deb5979x80.png" crc="85643962" seo="true" ref="reviews">
+      <caption webpage="reviews" alt=""/>
+    </file>
+  </folder>
+  <file name="index.html" crc="4126397154" seo="true" mt="1552909165715" redirect="true"/>
+  <file name="services.html" crc="382549192" seo="true" mt="1552909165715" redirect="true"/>
+  <file name="partners.html" crc="80589848" seo="true" mt="1552909165715" redirect="true"/>
+  <file name="about-us.html" crc="3930154911" seo="true" mt="1552909165715" redirect="true"/>
+  <file name="reviews.html" crc="3948140474" seo="true" mt="1552909171166" redirect="true"/>
+</manifest>

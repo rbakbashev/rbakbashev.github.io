@@ -1,0 +1,485 @@
+
+
+<style>
+
+    .legend-box {
+      cursor: pointer;
+    }
+    
+</style>
+
+<div id="fig_el198841406299953647604072417636"></div>
+<script>
+function mpld3_load_lib(url, callback){
+  var s = document.createElement('script');
+  s.src = url;
+  s.async = true;
+  s.onreadystatechange = s.onload = callback;
+  s.onerror = function(){console.warn("failed to load library " + url);};
+  document.getElementsByTagName("head")[0].appendChild(s);
+}
+
+if(typeof(mpld3) !== "undefined" && mpld3._mpld3IsLoaded){
+   // already loaded: just create the figure
+   !function(mpld3){
+       
+    mpld3.register_plugin("interactive_legend", InteractiveLegend);
+    InteractiveLegend.prototype = Object.create(mpld3.Plugin.prototype);
+    InteractiveLegend.prototype.constructor = InteractiveLegend;
+    InteractiveLegend.prototype.requiredProps = ["element_ids", "labels"];
+    InteractiveLegend.prototype.defaultProps = {"ax":null,
+                                                "alpha_unsel":0.2,
+                                                "alpha_over":1.0,
+                                                "start_visible":true}
+    function InteractiveLegend(fig, props){
+        mpld3.Plugin.call(this, fig, props);
+    };
+
+    InteractiveLegend.prototype.draw = function(){
+        var alpha_unsel = this.props.alpha_unsel;
+        var alpha_over = this.props.alpha_over;
+
+        var legendItems = new Array();
+        for(var i=0; i<this.props.labels.length; i++){
+            var obj = {};
+            obj.label = this.props.labels[i];
+
+            var element_id = this.props.element_ids[i];
+            mpld3_elements = [];
+            for(var j=0; j<element_id.length; j++){
+                var mpld3_element = mpld3.get_element(element_id[j], this.fig);
+
+                // mpld3_element might be null in case of Line2D instances
+                // for we pass the id for both the line and the markers. Either
+                // one might not exist on the D3 side
+                if(mpld3_element){
+                    mpld3_elements.push(mpld3_element);
+                }
+            }
+
+            obj.mpld3_elements = mpld3_elements;
+            obj.visible = this.props.start_visible[i]; // should become be setable from python side
+            legendItems.push(obj);
+            set_alphas(obj, false);
+        }
+
+        // determine the axes with which this legend is associated
+        var ax = this.props.ax
+        if(!ax){
+            ax = this.fig.axes[0];
+        } else{
+            ax = mpld3.get_element(ax, this.fig);
+        }
+
+        // add a legend group to the canvas of the figure
+        var legend = this.fig.canvas.append("svg:g")
+                               .attr("class", "legend");
+
+        // add the rectangles
+        legend.selectAll("rect")
+                .data(legendItems)
+                .enter().append("rect")
+                .attr("height", 10)
+                .attr("width", 25)
+                .attr("x", ax.width + ax.position[0] + 25)
+                .attr("y",function(d,i) {
+                           return ax.position[1] + i * 25 + 10;})
+                .attr("stroke", get_color)
+                .attr("class", "legend-box")
+                .style("fill", function(d, i) {
+                           return d.visible ? get_color(d) : "white";})
+                .on("click", click).on('mouseover', over).on('mouseout', out);
+
+        // add the labels
+        legend.selectAll("text")
+              .data(legendItems)
+              .enter().append("text")
+              .attr("x", function (d) {
+                           return ax.width + ax.position[0] + 25 + 40;})
+              .attr("y", function(d,i) {
+                           return ax.position[1] + i * 25 + 10 + 10 - 1;})
+              .text(function(d) { return d.label });
+
+
+        // specify the action on click
+        function click(d,i){
+            d.visible = !d.visible;
+            d3.select(this)
+              .style("fill",function(d, i) {
+                return d.visible ? get_color(d) : "white";
+              })
+            set_alphas(d, false);
+
+        };
+
+        // specify the action on legend overlay 
+        function over(d,i){
+             set_alphas(d, true);
+        };
+
+        // specify the action on legend overlay 
+        function out(d,i){
+             set_alphas(d, false);
+        };
+
+        // helper function for setting alphas
+        function set_alphas(d, is_over){
+            for(var i=0; i<d.mpld3_elements.length; i++){
+                var type = d.mpld3_elements[i].constructor.name;
+
+                if(type =="mpld3_Line"){
+                    var current_alpha = d.mpld3_elements[i].props.alpha;
+                    var current_alpha_unsel = current_alpha * alpha_unsel;
+                    var current_alpha_over = current_alpha * alpha_over;
+                    d3.select(d.mpld3_elements[i].path[0][0])
+                        .style("stroke-opacity", is_over ? current_alpha_over :
+                                                (d.visible ? current_alpha : current_alpha_unsel))
+                        .style("stroke-width", is_over ? 
+                                alpha_over * d.mpld3_elements[i].props.edgewidth : d.mpld3_elements[i].props.edgewidth);
+                } else if((type=="mpld3_PathCollection")||
+                         (type=="mpld3_Markers")){
+                    var current_alpha = d.mpld3_elements[i].props.alphas[0];
+                    var current_alpha_unsel = current_alpha * alpha_unsel;
+                    var current_alpha_over = current_alpha * alpha_over;
+                    d3.selectAll(d.mpld3_elements[i].pathsobj[0])
+                        .style("stroke-opacity", is_over ? current_alpha_over :
+                                                (d.visible ? current_alpha : current_alpha_unsel))
+                        .style("fill-opacity", is_over ? current_alpha_over :
+                                                (d.visible ? current_alpha : current_alpha_unsel));
+                } else{
+                    console.log(type + " not yet supported");
+                }
+            }
+        };
+
+
+        // helper function for determining the color of the rectangles
+        function get_color(d){
+            var type = d.mpld3_elements[0].constructor.name;
+            var color = "black";
+            if(type =="mpld3_Line"){
+                color = d.mpld3_elements[0].props.edgecolor;
+            } else if((type=="mpld3_PathCollection")||
+                      (type=="mpld3_Markers")){
+                color = d.mpld3_elements[0].props.facecolors[0];
+            } else{
+                console.log(type + " not yet supported");
+            }
+            return color;
+        };
+    };
+    
+       mpld3.draw_figure("fig_el198841406299953647604072417636", {"id": "el19884140629995364760", "width": 640.0, "axes": [{"images": [], "sharex": [], "paths": [], "xscale": "linear", "axesbg": "#FFFFFF", "ydomain": [-0.8024112221413973, 20.38131510312104], "collections": [{"pathtransforms": [], "alphas": [0.4], "paths": [[[[0.0, 10.163986277024462], [0.0, 8.388715537924412], [1.0, 3.6734578027053812], [2.0, 5.526227619678506], [3.0, 3.5958898164008843], [4.0, 5.811328434083931], [5.0, 6.353604345331803], [6.0, 3.1725283719325894], [7.0, 7.827360596052282], [8.0, 3.662974932685719], [9.0, 5.952902505561897], [10.0, 7.805965793363679], [11.0, 3.2908111676276857], [12.0, 0.16048542900689533], [13.0, 0.3671393958565643], [14.0, 2.7153299785503826], [15.0, 6.846865555308069], [16.0, 5.876843862245941], [17.0, 10.405611009354674], [18.0, 14.056609172537954], [19.0, 14.438223665013526], [19.0, 16.213494404113575], [19.0, 16.213494404113575], [18.0, 15.831879911638003], [17.0, 12.180881748454723], [16.0, 7.652114601345991], [15.0, 8.622136294408119], [14.0, 4.490600717650432], [13.0, 2.142410134956614], [12.0, 1.9357561681069448], [11.0, 5.066081906727735], [10.0, 9.581236532463729], [9.0, 7.728173244661947], [8.0, 5.438245671785769], [7.0, 9.602631335152331], [6.0, 4.947799111032639], [5.0, 8.128875084431852], [4.0, 7.586599173183981], [3.0, 5.371160555500934], [2.0, 7.301498358778556], [1.0, 5.448728541805431], [0.0, 10.163986277024462]], ["M", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "Z"]]], "zorder": 1, "yindex": 1, "facecolors": ["#1F77B4"], "offsets": "data02", "id": "el19884140630766788560", "pathcoordinates": "data", "edgecolors": ["#1F77B4"], "offsetcoordinates": "display", "edgewidths": [1.0], "xindex": 0}, {"pathtransforms": [], "alphas": [0.4], "paths": [[[[0.0, 10.706675868681398], [0.0, 7.085781959981885], [1.0, 3.8009985222329155], [2.0, 7.139967148593682], [3.0, 11.076097945427653], [4.0, 7.975487487475622], [5.0, 6.496807027741763], [6.0, 9.352824646385352], [7.0, 6.676361264532959], [8.0, 7.711845487445144], [9.0, 5.4742337724177705], [10.0, 5.652908514388246], [11.0, 2.0316008900093063], [12.0, 6.974779901550276], [13.0, 7.762675256304446], [14.0, 8.18229297860038], [15.0, 11.261494488479551], [16.0, 9.83373791668743], [17.0, 8.270053695613028], [18.0, 11.572830817600996], [19.0, 15.797524543273235], [19.0, 19.418418451972748], [19.0, 19.418418451972748], [18.0, 15.193724726300509], [17.0, 11.89094760431254], [16.0, 13.454631825386942], [15.0, 14.882388397179064], [14.0, 11.803186887299892], [13.0, 11.383569165003959], [12.0, 10.595673810249789], [11.0, 5.652494798708819], [10.0, 9.273802423087758], [9.0, 9.095127681117283], [8.0, 11.332739396144657], [7.0, 10.297255173232472], [6.0, 12.973718555084865], [5.0, 10.117700936441276], [4.0, 11.596381396175135], [3.0, 14.696991854127166], [2.0, 10.760861057293194], [1.0, 7.421892430932428], [0.0, 10.706675868681398]], ["M", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "Z"]]], "zorder": 1, "yindex": 0, "facecolors": ["#FF7F0E"], "offsets": "data02", "id": "el19884140630766880248", "pathcoordinates": "data", "edgecolors": ["#FF7F0E"], "offsetcoordinates": "display", "edgewidths": [1.0], "xindex": 0}], "zoomable": true, "ylim": [-0.8024112221413973, 20.38131510312104], "xlim": [-0.9500000000000001, 19.95], "sharey": [], "xdomain": [-0.9500000000000001, 19.95], "texts": [{"text": "\u0432\u0440\u0435\u043c\u044f (\u0434\u043d\u0438)", "fontsize": 10.0, "zorder": 3, "alpha": 1, "coordinates": "axes", "position": [0.5, -0.07921476671476674], "id": "el19884140630780706376", "v_baseline": "hanging", "h_anchor": "middle", "rotation": -0.0, "color": "#000000"}, {"text": "\u0437\u0430\u0440\u0430\u0431\u043e\u0442\u043e\u043a (\u0440\u0443\u0431 * 10^3)", "fontsize": 10.0, "zorder": 3, "alpha": 1, "coordinates": "axes", "position": [-0.09279793906810037, 0.5], "id": "el19884140630780789368", "v_baseline": "auto", "h_anchor": "middle", "rotation": -90.0, "color": "#000000"}], "bbox": [0.125, 0.10999999999999999, 0.775, 0.77], "id": "el19884140630780703912", "axes": [{"scale": "linear", "visible": true, "nticks": 10, "grid": {"color": "#B0B0B0", "gridOn": true, "alpha": 0.3, "dasharray": "none"}, "fontsize": 10.0, "tickformat": null, "tickvalues": null, "position": "bottom"}, {"scale": "linear", "visible": true, "nticks": 11, "grid": {"color": "#B0B0B0", "gridOn": true, "alpha": 0.3, "dasharray": "none"}, "fontsize": 10.0, "tickformat": null, "tickvalues": null, "position": "left"}], "yscale": "linear", "axesbgalpha": null, "lines": [{"id": "el19884140630766787440", "coordinates": "data", "linewidth": 1.5, "drawstyle": "default", "data": "data01", "color": "#1F77B4", "yindex": 1, "alpha": 1, "dasharray": "none", "zorder": 2, "xindex": 0}, {"id": "el19884140630766879296", "coordinates": "data", "linewidth": 1.5, "drawstyle": "default", "data": "data01", "color": "#FF7F0E", "yindex": 2, "alpha": 1, "dasharray": "none", "zorder": 2, "xindex": 0}], "markers": []}], "plugins": [{"type": "reset"}, {"type": "zoom", "enabled": false, "button": true}, {"type": "boxzoom", "enabled": false, "button": true}, {"alpha_unsel": 0.5, "ax": null, "element_ids": [["el19884140630766787440", "el19884140630766787440pts", "el19884140630766788560"], ["el19884140630766879296", "el19884140630766879296pts", "el19884140630766880248"]], "labels": ["a", "b"], "type": "interactive_legend", "start_visible": [true, true], "alpha_over": 1.5}], "data": {"data02": [[0.0, 0.0]], "data01": [[0.0, 10.163986277024462, 10.706675868681398], [1.0, 5.448728541805431, 7.421892430932428], [2.0, 7.301498358778556, 10.760861057293194], [3.0, 5.371160555500934, 14.696991854127166], [4.0, 7.586599173183981, 11.596381396175135], [5.0, 8.128875084431852, 10.117700936441276], [6.0, 4.947799111032639, 12.973718555084865], [7.0, 9.602631335152331, 10.297255173232472], [8.0, 5.438245671785769, 11.332739396144657], [9.0, 7.728173244661947, 9.095127681117283], [10.0, 9.581236532463729, 9.273802423087758], [11.0, 5.066081906727735, 5.652494798708819], [12.0, 1.9357561681069448, 10.595673810249789], [13.0, 2.142410134956614, 11.383569165003959], [14.0, 4.490600717650432, 11.803186887299892], [15.0, 8.622136294408119, 14.882388397179064], [16.0, 7.652114601345991, 13.454631825386942], [17.0, 12.180881748454723, 11.89094760431254], [18.0, 15.831879911638003, 15.193724726300509], [19.0, 16.213494404113575, 19.418418451972748]]}, "height": 480.0});
+   }(mpld3);
+}else if(typeof define === "function" && define.amd){
+   // require.js is available: use it to load d3/mpld3
+   require.config({paths: {d3: "https://mpld3.github.io/js/d3.v3.min"}});
+   require(["d3"], function(d3){
+      window.d3 = d3;
+      mpld3_load_lib("https://mpld3.github.io/js/mpld3.v0.3.1.dev1.js", function(){
+         
+    mpld3.register_plugin("interactive_legend", InteractiveLegend);
+    InteractiveLegend.prototype = Object.create(mpld3.Plugin.prototype);
+    InteractiveLegend.prototype.constructor = InteractiveLegend;
+    InteractiveLegend.prototype.requiredProps = ["element_ids", "labels"];
+    InteractiveLegend.prototype.defaultProps = {"ax":null,
+                                                "alpha_unsel":0.2,
+                                                "alpha_over":1.0,
+                                                "start_visible":true}
+    function InteractiveLegend(fig, props){
+        mpld3.Plugin.call(this, fig, props);
+    };
+
+    InteractiveLegend.prototype.draw = function(){
+        var alpha_unsel = this.props.alpha_unsel;
+        var alpha_over = this.props.alpha_over;
+
+        var legendItems = new Array();
+        for(var i=0; i<this.props.labels.length; i++){
+            var obj = {};
+            obj.label = this.props.labels[i];
+
+            var element_id = this.props.element_ids[i];
+            mpld3_elements = [];
+            for(var j=0; j<element_id.length; j++){
+                var mpld3_element = mpld3.get_element(element_id[j], this.fig);
+
+                // mpld3_element might be null in case of Line2D instances
+                // for we pass the id for both the line and the markers. Either
+                // one might not exist on the D3 side
+                if(mpld3_element){
+                    mpld3_elements.push(mpld3_element);
+                }
+            }
+
+            obj.mpld3_elements = mpld3_elements;
+            obj.visible = this.props.start_visible[i]; // should become be setable from python side
+            legendItems.push(obj);
+            set_alphas(obj, false);
+        }
+
+        // determine the axes with which this legend is associated
+        var ax = this.props.ax
+        if(!ax){
+            ax = this.fig.axes[0];
+        } else{
+            ax = mpld3.get_element(ax, this.fig);
+        }
+
+        // add a legend group to the canvas of the figure
+        var legend = this.fig.canvas.append("svg:g")
+                               .attr("class", "legend");
+
+        // add the rectangles
+        legend.selectAll("rect")
+                .data(legendItems)
+                .enter().append("rect")
+                .attr("height", 10)
+                .attr("width", 25)
+                .attr("x", ax.width + ax.position[0] + 25)
+                .attr("y",function(d,i) {
+                           return ax.position[1] + i * 25 + 10;})
+                .attr("stroke", get_color)
+                .attr("class", "legend-box")
+                .style("fill", function(d, i) {
+                           return d.visible ? get_color(d) : "white";})
+                .on("click", click).on('mouseover', over).on('mouseout', out);
+
+        // add the labels
+        legend.selectAll("text")
+              .data(legendItems)
+              .enter().append("text")
+              .attr("x", function (d) {
+                           return ax.width + ax.position[0] + 25 + 40;})
+              .attr("y", function(d,i) {
+                           return ax.position[1] + i * 25 + 10 + 10 - 1;})
+              .text(function(d) { return d.label });
+
+
+        // specify the action on click
+        function click(d,i){
+            d.visible = !d.visible;
+            d3.select(this)
+              .style("fill",function(d, i) {
+                return d.visible ? get_color(d) : "white";
+              })
+            set_alphas(d, false);
+
+        };
+
+        // specify the action on legend overlay 
+        function over(d,i){
+             set_alphas(d, true);
+        };
+
+        // specify the action on legend overlay 
+        function out(d,i){
+             set_alphas(d, false);
+        };
+
+        // helper function for setting alphas
+        function set_alphas(d, is_over){
+            for(var i=0; i<d.mpld3_elements.length; i++){
+                var type = d.mpld3_elements[i].constructor.name;
+
+                if(type =="mpld3_Line"){
+                    var current_alpha = d.mpld3_elements[i].props.alpha;
+                    var current_alpha_unsel = current_alpha * alpha_unsel;
+                    var current_alpha_over = current_alpha * alpha_over;
+                    d3.select(d.mpld3_elements[i].path[0][0])
+                        .style("stroke-opacity", is_over ? current_alpha_over :
+                                                (d.visible ? current_alpha : current_alpha_unsel))
+                        .style("stroke-width", is_over ? 
+                                alpha_over * d.mpld3_elements[i].props.edgewidth : d.mpld3_elements[i].props.edgewidth);
+                } else if((type=="mpld3_PathCollection")||
+                         (type=="mpld3_Markers")){
+                    var current_alpha = d.mpld3_elements[i].props.alphas[0];
+                    var current_alpha_unsel = current_alpha * alpha_unsel;
+                    var current_alpha_over = current_alpha * alpha_over;
+                    d3.selectAll(d.mpld3_elements[i].pathsobj[0])
+                        .style("stroke-opacity", is_over ? current_alpha_over :
+                                                (d.visible ? current_alpha : current_alpha_unsel))
+                        .style("fill-opacity", is_over ? current_alpha_over :
+                                                (d.visible ? current_alpha : current_alpha_unsel));
+                } else{
+                    console.log(type + " not yet supported");
+                }
+            }
+        };
+
+
+        // helper function for determining the color of the rectangles
+        function get_color(d){
+            var type = d.mpld3_elements[0].constructor.name;
+            var color = "black";
+            if(type =="mpld3_Line"){
+                color = d.mpld3_elements[0].props.edgecolor;
+            } else if((type=="mpld3_PathCollection")||
+                      (type=="mpld3_Markers")){
+                color = d.mpld3_elements[0].props.facecolors[0];
+            } else{
+                console.log(type + " not yet supported");
+            }
+            return color;
+        };
+    };
+    
+         mpld3.draw_figure("fig_el198841406299953647604072417636", {"id": "el19884140629995364760", "width": 640.0, "axes": [{"images": [], "sharex": [], "paths": [], "xscale": "linear", "axesbg": "#FFFFFF", "ydomain": [-0.8024112221413973, 20.38131510312104], "collections": [{"pathtransforms": [], "alphas": [0.4], "paths": [[[[0.0, 10.163986277024462], [0.0, 8.388715537924412], [1.0, 3.6734578027053812], [2.0, 5.526227619678506], [3.0, 3.5958898164008843], [4.0, 5.811328434083931], [5.0, 6.353604345331803], [6.0, 3.1725283719325894], [7.0, 7.827360596052282], [8.0, 3.662974932685719], [9.0, 5.952902505561897], [10.0, 7.805965793363679], [11.0, 3.2908111676276857], [12.0, 0.16048542900689533], [13.0, 0.3671393958565643], [14.0, 2.7153299785503826], [15.0, 6.846865555308069], [16.0, 5.876843862245941], [17.0, 10.405611009354674], [18.0, 14.056609172537954], [19.0, 14.438223665013526], [19.0, 16.213494404113575], [19.0, 16.213494404113575], [18.0, 15.831879911638003], [17.0, 12.180881748454723], [16.0, 7.652114601345991], [15.0, 8.622136294408119], [14.0, 4.490600717650432], [13.0, 2.142410134956614], [12.0, 1.9357561681069448], [11.0, 5.066081906727735], [10.0, 9.581236532463729], [9.0, 7.728173244661947], [8.0, 5.438245671785769], [7.0, 9.602631335152331], [6.0, 4.947799111032639], [5.0, 8.128875084431852], [4.0, 7.586599173183981], [3.0, 5.371160555500934], [2.0, 7.301498358778556], [1.0, 5.448728541805431], [0.0, 10.163986277024462]], ["M", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "Z"]]], "zorder": 1, "yindex": 1, "facecolors": ["#1F77B4"], "offsets": "data02", "id": "el19884140630766788560", "pathcoordinates": "data", "edgecolors": ["#1F77B4"], "offsetcoordinates": "display", "edgewidths": [1.0], "xindex": 0}, {"pathtransforms": [], "alphas": [0.4], "paths": [[[[0.0, 10.706675868681398], [0.0, 7.085781959981885], [1.0, 3.8009985222329155], [2.0, 7.139967148593682], [3.0, 11.076097945427653], [4.0, 7.975487487475622], [5.0, 6.496807027741763], [6.0, 9.352824646385352], [7.0, 6.676361264532959], [8.0, 7.711845487445144], [9.0, 5.4742337724177705], [10.0, 5.652908514388246], [11.0, 2.0316008900093063], [12.0, 6.974779901550276], [13.0, 7.762675256304446], [14.0, 8.18229297860038], [15.0, 11.261494488479551], [16.0, 9.83373791668743], [17.0, 8.270053695613028], [18.0, 11.572830817600996], [19.0, 15.797524543273235], [19.0, 19.418418451972748], [19.0, 19.418418451972748], [18.0, 15.193724726300509], [17.0, 11.89094760431254], [16.0, 13.454631825386942], [15.0, 14.882388397179064], [14.0, 11.803186887299892], [13.0, 11.383569165003959], [12.0, 10.595673810249789], [11.0, 5.652494798708819], [10.0, 9.273802423087758], [9.0, 9.095127681117283], [8.0, 11.332739396144657], [7.0, 10.297255173232472], [6.0, 12.973718555084865], [5.0, 10.117700936441276], [4.0, 11.596381396175135], [3.0, 14.696991854127166], [2.0, 10.760861057293194], [1.0, 7.421892430932428], [0.0, 10.706675868681398]], ["M", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "Z"]]], "zorder": 1, "yindex": 0, "facecolors": ["#FF7F0E"], "offsets": "data02", "id": "el19884140630766880248", "pathcoordinates": "data", "edgecolors": ["#FF7F0E"], "offsetcoordinates": "display", "edgewidths": [1.0], "xindex": 0}], "zoomable": true, "ylim": [-0.8024112221413973, 20.38131510312104], "xlim": [-0.9500000000000001, 19.95], "sharey": [], "xdomain": [-0.9500000000000001, 19.95], "texts": [{"text": "\u0432\u0440\u0435\u043c\u044f (\u0434\u043d\u0438)", "fontsize": 10.0, "zorder": 3, "alpha": 1, "coordinates": "axes", "position": [0.5, -0.07921476671476674], "id": "el19884140630780706376", "v_baseline": "hanging", "h_anchor": "middle", "rotation": -0.0, "color": "#000000"}, {"text": "\u0437\u0430\u0440\u0430\u0431\u043e\u0442\u043e\u043a (\u0440\u0443\u0431 * 10^3)", "fontsize": 10.0, "zorder": 3, "alpha": 1, "coordinates": "axes", "position": [-0.09279793906810037, 0.5], "id": "el19884140630780789368", "v_baseline": "auto", "h_anchor": "middle", "rotation": -90.0, "color": "#000000"}], "bbox": [0.125, 0.10999999999999999, 0.775, 0.77], "id": "el19884140630780703912", "axes": [{"scale": "linear", "visible": true, "nticks": 10, "grid": {"color": "#B0B0B0", "gridOn": true, "alpha": 0.3, "dasharray": "none"}, "fontsize": 10.0, "tickformat": null, "tickvalues": null, "position": "bottom"}, {"scale": "linear", "visible": true, "nticks": 11, "grid": {"color": "#B0B0B0", "gridOn": true, "alpha": 0.3, "dasharray": "none"}, "fontsize": 10.0, "tickformat": null, "tickvalues": null, "position": "left"}], "yscale": "linear", "axesbgalpha": null, "lines": [{"id": "el19884140630766787440", "coordinates": "data", "linewidth": 1.5, "drawstyle": "default", "data": "data01", "color": "#1F77B4", "yindex": 1, "alpha": 1, "dasharray": "none", "zorder": 2, "xindex": 0}, {"id": "el19884140630766879296", "coordinates": "data", "linewidth": 1.5, "drawstyle": "default", "data": "data01", "color": "#FF7F0E", "yindex": 2, "alpha": 1, "dasharray": "none", "zorder": 2, "xindex": 0}], "markers": []}], "plugins": [{"type": "reset"}, {"type": "zoom", "enabled": false, "button": true}, {"type": "boxzoom", "enabled": false, "button": true}, {"alpha_unsel": 0.5, "ax": null, "element_ids": [["el19884140630766787440", "el19884140630766787440pts", "el19884140630766788560"], ["el19884140630766879296", "el19884140630766879296pts", "el19884140630766880248"]], "labels": ["a", "b"], "type": "interactive_legend", "start_visible": [true, true], "alpha_over": 1.5}], "data": {"data02": [[0.0, 0.0]], "data01": [[0.0, 10.163986277024462, 10.706675868681398], [1.0, 5.448728541805431, 7.421892430932428], [2.0, 7.301498358778556, 10.760861057293194], [3.0, 5.371160555500934, 14.696991854127166], [4.0, 7.586599173183981, 11.596381396175135], [5.0, 8.128875084431852, 10.117700936441276], [6.0, 4.947799111032639, 12.973718555084865], [7.0, 9.602631335152331, 10.297255173232472], [8.0, 5.438245671785769, 11.332739396144657], [9.0, 7.728173244661947, 9.095127681117283], [10.0, 9.581236532463729, 9.273802423087758], [11.0, 5.066081906727735, 5.652494798708819], [12.0, 1.9357561681069448, 10.595673810249789], [13.0, 2.142410134956614, 11.383569165003959], [14.0, 4.490600717650432, 11.803186887299892], [15.0, 8.622136294408119, 14.882388397179064], [16.0, 7.652114601345991, 13.454631825386942], [17.0, 12.180881748454723, 11.89094760431254], [18.0, 15.831879911638003, 15.193724726300509], [19.0, 16.213494404113575, 19.418418451972748]]}, "height": 480.0});
+      });
+    });
+}else{
+    // require.js not available: dynamically load d3 & mpld3
+    mpld3_load_lib("https://mpld3.github.io/js/d3.v3.min.js", function(){
+         mpld3_load_lib("https://mpld3.github.io/js/mpld3.v0.3.1.dev1.js", function(){
+                 
+    mpld3.register_plugin("interactive_legend", InteractiveLegend);
+    InteractiveLegend.prototype = Object.create(mpld3.Plugin.prototype);
+    InteractiveLegend.prototype.constructor = InteractiveLegend;
+    InteractiveLegend.prototype.requiredProps = ["element_ids", "labels"];
+    InteractiveLegend.prototype.defaultProps = {"ax":null,
+                                                "alpha_unsel":0.2,
+                                                "alpha_over":1.0,
+                                                "start_visible":true}
+    function InteractiveLegend(fig, props){
+        mpld3.Plugin.call(this, fig, props);
+    };
+
+    InteractiveLegend.prototype.draw = function(){
+        var alpha_unsel = this.props.alpha_unsel;
+        var alpha_over = this.props.alpha_over;
+
+        var legendItems = new Array();
+        for(var i=0; i<this.props.labels.length; i++){
+            var obj = {};
+            obj.label = this.props.labels[i];
+
+            var element_id = this.props.element_ids[i];
+            mpld3_elements = [];
+            for(var j=0; j<element_id.length; j++){
+                var mpld3_element = mpld3.get_element(element_id[j], this.fig);
+
+                // mpld3_element might be null in case of Line2D instances
+                // for we pass the id for both the line and the markers. Either
+                // one might not exist on the D3 side
+                if(mpld3_element){
+                    mpld3_elements.push(mpld3_element);
+                }
+            }
+
+            obj.mpld3_elements = mpld3_elements;
+            obj.visible = this.props.start_visible[i]; // should become be setable from python side
+            legendItems.push(obj);
+            set_alphas(obj, false);
+        }
+
+        // determine the axes with which this legend is associated
+        var ax = this.props.ax
+        if(!ax){
+            ax = this.fig.axes[0];
+        } else{
+            ax = mpld3.get_element(ax, this.fig);
+        }
+
+        // add a legend group to the canvas of the figure
+        var legend = this.fig.canvas.append("svg:g")
+                               .attr("class", "legend");
+
+        // add the rectangles
+        legend.selectAll("rect")
+                .data(legendItems)
+                .enter().append("rect")
+                .attr("height", 10)
+                .attr("width", 25)
+                .attr("x", ax.width + ax.position[0] + 25)
+                .attr("y",function(d,i) {
+                           return ax.position[1] + i * 25 + 10;})
+                .attr("stroke", get_color)
+                .attr("class", "legend-box")
+                .style("fill", function(d, i) {
+                           return d.visible ? get_color(d) : "white";})
+                .on("click", click).on('mouseover', over).on('mouseout', out);
+
+        // add the labels
+        legend.selectAll("text")
+              .data(legendItems)
+              .enter().append("text")
+              .attr("x", function (d) {
+                           return ax.width + ax.position[0] + 25 + 40;})
+              .attr("y", function(d,i) {
+                           return ax.position[1] + i * 25 + 10 + 10 - 1;})
+              .text(function(d) { return d.label });
+
+
+        // specify the action on click
+        function click(d,i){
+            d.visible = !d.visible;
+            d3.select(this)
+              .style("fill",function(d, i) {
+                return d.visible ? get_color(d) : "white";
+              })
+            set_alphas(d, false);
+
+        };
+
+        // specify the action on legend overlay 
+        function over(d,i){
+             set_alphas(d, true);
+        };
+
+        // specify the action on legend overlay 
+        function out(d,i){
+             set_alphas(d, false);
+        };
+
+        // helper function for setting alphas
+        function set_alphas(d, is_over){
+            for(var i=0; i<d.mpld3_elements.length; i++){
+                var type = d.mpld3_elements[i].constructor.name;
+
+                if(type =="mpld3_Line"){
+                    var current_alpha = d.mpld3_elements[i].props.alpha;
+                    var current_alpha_unsel = current_alpha * alpha_unsel;
+                    var current_alpha_over = current_alpha * alpha_over;
+                    d3.select(d.mpld3_elements[i].path[0][0])
+                        .style("stroke-opacity", is_over ? current_alpha_over :
+                                                (d.visible ? current_alpha : current_alpha_unsel))
+                        .style("stroke-width", is_over ? 
+                                alpha_over * d.mpld3_elements[i].props.edgewidth : d.mpld3_elements[i].props.edgewidth);
+                } else if((type=="mpld3_PathCollection")||
+                         (type=="mpld3_Markers")){
+                    var current_alpha = d.mpld3_elements[i].props.alphas[0];
+                    var current_alpha_unsel = current_alpha * alpha_unsel;
+                    var current_alpha_over = current_alpha * alpha_over;
+                    d3.selectAll(d.mpld3_elements[i].pathsobj[0])
+                        .style("stroke-opacity", is_over ? current_alpha_over :
+                                                (d.visible ? current_alpha : current_alpha_unsel))
+                        .style("fill-opacity", is_over ? current_alpha_over :
+                                                (d.visible ? current_alpha : current_alpha_unsel));
+                } else{
+                    console.log(type + " not yet supported");
+                }
+            }
+        };
+
+
+        // helper function for determining the color of the rectangles
+        function get_color(d){
+            var type = d.mpld3_elements[0].constructor.name;
+            var color = "black";
+            if(type =="mpld3_Line"){
+                color = d.mpld3_elements[0].props.edgecolor;
+            } else if((type=="mpld3_PathCollection")||
+                      (type=="mpld3_Markers")){
+                color = d.mpld3_elements[0].props.facecolors[0];
+            } else{
+                console.log(type + " not yet supported");
+            }
+            return color;
+        };
+    };
+    
+                 mpld3.draw_figure("fig_el198841406299953647604072417636", {"id": "el19884140629995364760", "width": 640.0, "axes": [{"images": [], "sharex": [], "paths": [], "xscale": "linear", "axesbg": "#FFFFFF", "ydomain": [-0.8024112221413973, 20.38131510312104], "collections": [{"pathtransforms": [], "alphas": [0.4], "paths": [[[[0.0, 10.163986277024462], [0.0, 8.388715537924412], [1.0, 3.6734578027053812], [2.0, 5.526227619678506], [3.0, 3.5958898164008843], [4.0, 5.811328434083931], [5.0, 6.353604345331803], [6.0, 3.1725283719325894], [7.0, 7.827360596052282], [8.0, 3.662974932685719], [9.0, 5.952902505561897], [10.0, 7.805965793363679], [11.0, 3.2908111676276857], [12.0, 0.16048542900689533], [13.0, 0.3671393958565643], [14.0, 2.7153299785503826], [15.0, 6.846865555308069], [16.0, 5.876843862245941], [17.0, 10.405611009354674], [18.0, 14.056609172537954], [19.0, 14.438223665013526], [19.0, 16.213494404113575], [19.0, 16.213494404113575], [18.0, 15.831879911638003], [17.0, 12.180881748454723], [16.0, 7.652114601345991], [15.0, 8.622136294408119], [14.0, 4.490600717650432], [13.0, 2.142410134956614], [12.0, 1.9357561681069448], [11.0, 5.066081906727735], [10.0, 9.581236532463729], [9.0, 7.728173244661947], [8.0, 5.438245671785769], [7.0, 9.602631335152331], [6.0, 4.947799111032639], [5.0, 8.128875084431852], [4.0, 7.586599173183981], [3.0, 5.371160555500934], [2.0, 7.301498358778556], [1.0, 5.448728541805431], [0.0, 10.163986277024462]], ["M", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "Z"]]], "zorder": 1, "yindex": 1, "facecolors": ["#1F77B4"], "offsets": "data02", "id": "el19884140630766788560", "pathcoordinates": "data", "edgecolors": ["#1F77B4"], "offsetcoordinates": "display", "edgewidths": [1.0], "xindex": 0}, {"pathtransforms": [], "alphas": [0.4], "paths": [[[[0.0, 10.706675868681398], [0.0, 7.085781959981885], [1.0, 3.8009985222329155], [2.0, 7.139967148593682], [3.0, 11.076097945427653], [4.0, 7.975487487475622], [5.0, 6.496807027741763], [6.0, 9.352824646385352], [7.0, 6.676361264532959], [8.0, 7.711845487445144], [9.0, 5.4742337724177705], [10.0, 5.652908514388246], [11.0, 2.0316008900093063], [12.0, 6.974779901550276], [13.0, 7.762675256304446], [14.0, 8.18229297860038], [15.0, 11.261494488479551], [16.0, 9.83373791668743], [17.0, 8.270053695613028], [18.0, 11.572830817600996], [19.0, 15.797524543273235], [19.0, 19.418418451972748], [19.0, 19.418418451972748], [18.0, 15.193724726300509], [17.0, 11.89094760431254], [16.0, 13.454631825386942], [15.0, 14.882388397179064], [14.0, 11.803186887299892], [13.0, 11.383569165003959], [12.0, 10.595673810249789], [11.0, 5.652494798708819], [10.0, 9.273802423087758], [9.0, 9.095127681117283], [8.0, 11.332739396144657], [7.0, 10.297255173232472], [6.0, 12.973718555084865], [5.0, 10.117700936441276], [4.0, 11.596381396175135], [3.0, 14.696991854127166], [2.0, 10.760861057293194], [1.0, 7.421892430932428], [0.0, 10.706675868681398]], ["M", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "Z"]]], "zorder": 1, "yindex": 0, "facecolors": ["#FF7F0E"], "offsets": "data02", "id": "el19884140630766880248", "pathcoordinates": "data", "edgecolors": ["#FF7F0E"], "offsetcoordinates": "display", "edgewidths": [1.0], "xindex": 0}], "zoomable": true, "ylim": [-0.8024112221413973, 20.38131510312104], "xlim": [-0.9500000000000001, 19.95], "sharey": [], "xdomain": [-0.9500000000000001, 19.95], "texts": [{"text": "\u0432\u0440\u0435\u043c\u044f (\u0434\u043d\u0438)", "fontsize": 10.0, "zorder": 3, "alpha": 1, "coordinates": "axes", "position": [0.5, -0.07921476671476674], "id": "el19884140630780706376", "v_baseline": "hanging", "h_anchor": "middle", "rotation": -0.0, "color": "#000000"}, {"text": "\u0437\u0430\u0440\u0430\u0431\u043e\u0442\u043e\u043a (\u0440\u0443\u0431 * 10^3)", "fontsize": 10.0, "zorder": 3, "alpha": 1, "coordinates": "axes", "position": [-0.09279793906810037, 0.5], "id": "el19884140630780789368", "v_baseline": "auto", "h_anchor": "middle", "rotation": -90.0, "color": "#000000"}], "bbox": [0.125, 0.10999999999999999, 0.775, 0.77], "id": "el19884140630780703912", "axes": [{"scale": "linear", "visible": true, "nticks": 10, "grid": {"color": "#B0B0B0", "gridOn": true, "alpha": 0.3, "dasharray": "none"}, "fontsize": 10.0, "tickformat": null, "tickvalues": null, "position": "bottom"}, {"scale": "linear", "visible": true, "nticks": 11, "grid": {"color": "#B0B0B0", "gridOn": true, "alpha": 0.3, "dasharray": "none"}, "fontsize": 10.0, "tickformat": null, "tickvalues": null, "position": "left"}], "yscale": "linear", "axesbgalpha": null, "lines": [{"id": "el19884140630766787440", "coordinates": "data", "linewidth": 1.5, "drawstyle": "default", "data": "data01", "color": "#1F77B4", "yindex": 1, "alpha": 1, "dasharray": "none", "zorder": 2, "xindex": 0}, {"id": "el19884140630766879296", "coordinates": "data", "linewidth": 1.5, "drawstyle": "default", "data": "data01", "color": "#FF7F0E", "yindex": 2, "alpha": 1, "dasharray": "none", "zorder": 2, "xindex": 0}], "markers": []}], "plugins": [{"type": "reset"}, {"type": "zoom", "enabled": false, "button": true}, {"type": "boxzoom", "enabled": false, "button": true}, {"alpha_unsel": 0.5, "ax": null, "element_ids": [["el19884140630766787440", "el19884140630766787440pts", "el19884140630766788560"], ["el19884140630766879296", "el19884140630766879296pts", "el19884140630766880248"]], "labels": ["a", "b"], "type": "interactive_legend", "start_visible": [true, true], "alpha_over": 1.5}], "data": {"data02": [[0.0, 0.0]], "data01": [[0.0, 10.163986277024462, 10.706675868681398], [1.0, 5.448728541805431, 7.421892430932428], [2.0, 7.301498358778556, 10.760861057293194], [3.0, 5.371160555500934, 14.696991854127166], [4.0, 7.586599173183981, 11.596381396175135], [5.0, 8.128875084431852, 10.117700936441276], [6.0, 4.947799111032639, 12.973718555084865], [7.0, 9.602631335152331, 10.297255173232472], [8.0, 5.438245671785769, 11.332739396144657], [9.0, 7.728173244661947, 9.095127681117283], [10.0, 9.581236532463729, 9.273802423087758], [11.0, 5.066081906727735, 5.652494798708819], [12.0, 1.9357561681069448, 10.595673810249789], [13.0, 2.142410134956614, 11.383569165003959], [14.0, 4.490600717650432, 11.803186887299892], [15.0, 8.622136294408119, 14.882388397179064], [16.0, 7.652114601345991, 13.454631825386942], [17.0, 12.180881748454723, 11.89094760431254], [18.0, 15.831879911638003, 15.193724726300509], [19.0, 16.213494404113575, 19.418418451972748]]}, "height": 480.0});
+            })
+         });
+}
+</script>
