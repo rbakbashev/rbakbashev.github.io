@@ -1,0 +1,114 @@
+<DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <title>voproxyd: инструкция по установке и использованию</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+<h1 id="voproxyd-инструкция-по-установке-и-использованию">voproxyd: инструкция по установке и использованию</h1>
+<h3 id="установка">установка</h3>
+<ol style="list-style-type: decimal">
+<li>Скачайте код</li>
+</ol>
+<pre><code>$ git clone https://github.com/ruslashev/voproxyd</code></pre>
+<p>Если Вам не нужна история, то можно передать флаг <code>--depth=1</code>.</p>
+<ol start="2" style="list-style-type: decimal">
+<li>Выполните подготовку перед сборкой</li>
+</ol>
+<pre><code>$ cd voproxyd
+$ make prepare-onvif</code></pre>
+<p>Успешный вывод выглядит следующим образом:</p>
+<pre><code>unzip deps/gsoap_2.8.74.zip
+configure gsoap
+copy gsoap sources
+make gsoap
+install gsoap
+wsdl2h -o deps/onvif/onvif.h
+soapcpp2 deps/onvif/onvif.h
+soapcpp2 deps/gsoap-2.8/gsoap/import/wsdd5.h
+move nsmaps
+prepare successul</code></pre>
+<p>Этот этап может быть относительно долгим, но не больше 5 минут. В случае ошибок выводы команд записываются в <code>deps/logs/</code>.</p>
+<ol start="3" style="list-style-type: decimal">
+<li>Соберите</li>
+</ol>
+<pre><code>$ make</code></pre>
+<p>Рекомендуется использовать make с флагом <code>-j</code> и количеством потоков в Вашем процессоре, если Вы этого ещё не делаете.</p>
+<pre><code>download inih
+cc avltree.c
+cc bridge_inquiries.c
+cc buffer.c
+cc bridge_commands.c
+cc config.c
+cc daemonize.c
+cc main.c
+cc epoll.c
+cc socket.c
+cc visca.c
+cc visca_commands.c
+cc visca_inquiries.c
+cc worker.c
+cc soap_instance.c
+cc soap_ptz.c
+cc soap_utils.c
+cc deps/inih/ini.c
+cc deps/onvif/wsseapi.c
+cc deps/onvif/soapClient.c
+cc deps/onvif/stdsoap2.c
+cc deps/onvif/smdevp.c
+cc deps/onvif/dom.c
+cc deps/onvif/mecevp.c
+cc deps/onvif/threads.c
+cc deps/onvif/wsddapi.c
+cc deps/onvif/duration.c
+cc deps/onvif/wsaapi.c
+cc deps/onvif/soapC.c
+ld voproxyd
+successfully compiled voproxyd</code></pre>
+<h3 id="использование">использование</h3>
+<ol start="4" style="list-style-type: decimal">
+<li>При первом запуске программы Вы увидите следующее сообщение:</li>
+</ol>
+<pre><code>$ ./voproxyd
+error: no config file found. searched paths are (in following order):
+
+    $XDG_CONFIG_HOME/voproxyd/config
+    $HOME/.voproxyd.conf
+    .voproxyd.conf
+
+which on your system are:
+
+    /home/rbakbashev/.config/voproxyd/config
+    /home/rbakbashev/.voproxyd.conf
+    /home/rbakbashev/Documents/ruslashev/voproxyd/.voproxyd.conf
+
+a skeleton config file was created in $XDG_CONFIG_HOME/voproxyd/config</code></pre>
+<p>Программа соответствует <a href="https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html">XDG Base Directory Specification</a>. Это значит, что Ваша домашняя папка не будет захламлена конфигурационными файлами, однако если Вы хотите хранить настройки там или даже в папке с программой, то так тоже можно.</p>
+<p>В сообщении был выведен список в порядке приоритета по которому искались конфигурационные файлы. Они нигде не были найдены, поэтому один был создан за нас в <code>$XDG_CONFIG_HOME/voproxyd/config</code>. Заметьте, что, чтобы использовался другой файл, надо просто удалить более приоритетный или переместить его в желаемое место.</p>
+<ol start="5" style="list-style-type: decimal">
+<li>Отредактируйте файл настроек</li>
+</ol>
+<p>Автогенерированный файл содержит в себе следующее:</p>
+<pre><code># this is a check to make sure you&#39;ve modified the example file
+unmodified = true # remove this line
+
+username = user
+password = pass
+ip = 192.168.1.1
+
+# optional parameters and their default values:
+# port = 80
+# profile_idx = 0</code></pre>
+<p>Чтобы при повторном запуске программы не использовать данные из примера и Вы не забыли его отредактировать, на первой строке стоит переменная, которую надо удалить (если Вы изменили все данные, но забыли удалить строку, то Вам об этом тоже скажут).</p>
+<p>Отредактируйте соответствующие настройки и сохраните файл. Если Вы обеспокоены раскрытием чувствительных данных, поменяйте разрешения файла с помощью <code>chmod</code>.</p>
+<ol start="6" style="list-style-type: decimal">
+<li>Запуск</li>
+</ol>
+<p>Программа предоставляет, кроме флага <code>-h, --help</code>, флаг <code>-d, --daemonize</code>, для того, чтобы запускаться в фоновом режиме. Это удобно для автоматического запуска на старте системы, но не для первоначального пользования, когда надо смотреть в вывод в случае ошибок. В фоновом режиме программа журналирует вывод в <code>syslog</code>, который обычно на Linux-системах доступен в <code>/var/log/syslog</code>.</p>
+<p>Запустите программу:</p>
+<pre><code>$ ./voproxyd</code></pre>
+<p>Также узнайте IP-адрес устройства, на которой запущена программа с помощью <code>ip addr show</code>.</p>
+    </body>
+</html>
+
