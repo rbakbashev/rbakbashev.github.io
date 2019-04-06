@@ -1,6 +1,6 @@
 # voproxyd: инструкция по установке и использованию
 
-### установка
+### Установка
 
 1. Скачайте код
 
@@ -40,7 +40,7 @@ prepare successul
 $ make
 ```
 
-Рекомендуется использовать make с флагом `-j` и количеством потоков в Вашем процессоре, если Вы этого ещё не делаете. 
+Рекомендуется использовать make с флагом `-j` и количеством потоков в Вашем процессоре, если Вы этого ещё не делаете.
 
 ```
 download inih
@@ -76,7 +76,7 @@ ld voproxyd
 successfully compiled voproxyd
 ```
 
-### использование
+### Использование
 
 4. При первом запуске программы Вы увидите следующее сообщение:
 
@@ -132,5 +132,38 @@ ip = 192.168.1.1
 $ ./voproxyd
 ```
 
-Также узнайте IP-адрес устройства, на которой запущена программа с помощью `ip addr show`.
+При запуске Вы увидите список доступных профилей. Если Вы хотите использовать какой-либо из них, выберите соответствующий в настройке `profile_idx` в конфигурационном файле.
+
+```
+warning: using default port 80. to change add line "port = ..." to config.
+device info:
+Manufacturer:    HIKVISION
+Model:           DS-2DC2204IW-DE3/W
+FirmwareVersion: V5.4.0 build 160613
+SerialNumber:    DS-2DC2204IW-DE3/W20160726CCCH629386524
+HardwareId:      88
+
+available profiles:
+ 0. name: mainStream, ref. token: Profile_1, video encoder name: VideoEncoder_1
+ 1. name: subStream, ref. token: Profile_2, video encoder name: VideoEncoder_2
+ 2. name: thirdStream, ref. token: Profile_3, video encoder name: VideoEncoder_3
+ 3. name: trackingMain, ref. token: Profile_1052054490, video encoder name: (missing)
+ 4. name: trackingProfile, ref. token: Profile_558070500, video encoder name: (missing)
+ 5. name: trackingProfile, ref. token: Profile_683394561, video encoder name: (missing)
+```
+
+Также узнайте IP-адрес устройства, на котором запущена программа с помощью `ip addr show`. В этом примере адрес устройства = 192.168.114.3, камеры = 192.168.15.42.
+
+7. Использование в vMix
+
+Запустите vMix.
+
+(опционально) добавьте входной поток через Add Input -> Stream -> RTSP over UDP. URL = `rtsp://` + адрес камеры. Это даст визуальную обратную связь, когда мы будем управлять камерой.
+
+Зайдите в настройки потока -> PTZ. Device Type = Sony VISCA over IP. IP Address = адрес устройства, на котором запущен voproxyd. Порт и ничего больше прописывать не надо, так как он стандартный.
+
+Нажмите OK. Подключение должно пройти мгновенно. Если vMix возвращает ошибку, то удостоверьтесь, что
+Ваш компьютер может подсоединиться к устройству с программой, например через `ping`.
+
+Теперь Вы можете управлять общающейся по Onvif камерой из vMix по сопряжению VISCA <-> Onvif благодаря voproxyd.
 

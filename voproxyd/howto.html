@@ -34,7 +34,7 @@
     </head>
     <body>
 <h1 id="voproxyd-инструкция-по-установке-и-использованию">voproxyd: инструкция по установке и использованию</h1>
-<h3 id="установка">установка</h3>
+<h3 id="установка">Установка</h3>
 <ol style="list-style-type: decimal">
 <li>Скачайте код</li>
 </ol>
@@ -93,7 +93,7 @@ cc deps/onvif/wsaapi.c
 cc deps/onvif/soapC.c
 ld voproxyd
 successfully compiled voproxyd</code></pre>
-<h3 id="использование">использование</h3>
+<h3 id="использование">Использование</h3>
 <ol start="4" style="list-style-type: decimal">
 <li>При первом запуске программы Вы увидите следующее сообщение:</li>
 </ol>
@@ -135,7 +135,31 @@ ip = 192.168.1.1
 <p>Программа предоставляет, кроме флага <code>-h, --help</code>, флаг <code>-d, --daemonize</code>, для того, чтобы запускаться в фоновом режиме. Это удобно для автоматического запуска на старте системы, но не для первоначального пользования, когда надо смотреть в вывод в случае ошибок. В фоновом режиме программа журналирует вывод в <code>syslog</code>, который обычно на Linux-системах доступен в <code>/var/log/syslog</code>.</p>
 <p>Запустите программу:</p>
 <pre><code>$ ./voproxyd</code></pre>
-<p>Также узнайте IP-адрес устройства, на которой запущена программа с помощью <code>ip addr show</code>.</p>
+<p>При запуске Вы увидите список доступных профилей. Если Вы хотите использовать какой-либо из них, выберите соответствующий в настройке <code>profile_idx</code> в конфигурационном файле.</p>
+<pre><code>warning: using default port 80. to change add line &quot;port = ...&quot; to config.
+device info:
+Manufacturer:    HIKVISION
+Model:           DS-2DC2204IW-DE3/W
+FirmwareVersion: V5.4.0 build 160613
+SerialNumber:    DS-2DC2204IW-DE3/W20160726CCCH629386524
+HardwareId:      88
+
+available profiles:
+ 0. name: mainStream, ref. token: Profile_1, video encoder name: VideoEncoder_1
+ 1. name: subStream, ref. token: Profile_2, video encoder name: VideoEncoder_2
+ 2. name: thirdStream, ref. token: Profile_3, video encoder name: VideoEncoder_3
+ 3. name: trackingMain, ref. token: Profile_1052054490, video encoder name: (missing)
+ 4. name: trackingProfile, ref. token: Profile_558070500, video encoder name: (missing)
+ 5. name: trackingProfile, ref. token: Profile_683394561, video encoder name: (missing)</code></pre>
+<p>Также узнайте IP-адрес устройства, на котором запущена программа с помощью <code>ip addr show</code>. В этом примере адрес устройства = 192.168.114.3, камеры = 192.168.15.42.</p>
+<ol start="7" style="list-style-type: decimal">
+<li>Использование в vMix</li>
+</ol>
+<p>Запустите vMix.</p>
+<p>(опционально) добавьте входной поток через Add Input -&gt; Stream -&gt; RTSP over UDP. URL = <code>rtsp://</code> + адрес камеры. Это даст визуальную обратную связь, когда мы будем управлять камерой.</p>
+<p>Зайдите в настройки потока -&gt; PTZ. Device Type = Sony VISCA over IP. IP Address = адрес устройства, на котором запущен voproxyd. Порт и ничего больше прописывать не надо, так как он стандартный.</p>
+<p>Нажмите OK. Подключение должно пройти мгновенно. Если vMix возвращает ошибку, то удостоверьтесь, что Ваш компьютер может подсоединиться к устройству с программой, например через <code>ping</code>.</p>
+<p>Теперь Вы можете управлять общающейся по Onvif камерой из vMix по сопряжению VISCA &lt;-&gt; Onvif благодаря voproxyd.</p>
     </body>
 </html>
 
