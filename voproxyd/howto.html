@@ -14,13 +14,15 @@
                 font-size: 1.1em;
             }
 
-            h1 { font-size: 140%; font-weight: bold; }
+            h1 {
+                font-size: 140%;
+                font-weight: bold;
+            }
 
-            h2 { font-size: 120%; font-weight: bold; }
-
-            h3 { font-size: 110%; font-weight: bold; }
-
-            h4 { font-size: 100%; font-weight: bold; }
+            h3 {
+                font-size: 110%;
+                font-weight: bold;
+            }
 
             pre {
                 padding: 8px 15px;
@@ -29,6 +31,12 @@
                 border: 1px solid #e5e5e5;
                 overflow-x: auto;
                 line-height: 1.2em;
+            }
+
+            img {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
             }
         </style>
     </head>
@@ -157,8 +165,11 @@ available profiles:
 </ol>
 <p>Запустите vMix.</p>
 <p>(опционально) добавьте входной поток через Add Input -&gt; Stream -&gt; RTSP over UDP. URL = <code>rtsp://</code> + адрес камеры. Это даст визуальную обратную связь, когда мы будем управлять камерой.</p>
+<p><img src="rtsp.png"></p>
 <p>Зайдите в настройки потока -&gt; PTZ. Device Type = Sony VISCA over IP. IP Address = адрес устройства, на котором запущен voproxyd. Порт и ничего больше прописывать не надо, так как он стандартный.</p>
+<p><img src="settings.png"></p>
 <p>Нажмите OK. Подключение должно пройти мгновенно. Если vMix возвращает ошибку, то удостоверьтесь, что Ваш компьютер может подсоединиться к устройству с программой, например через <code>ping</code>.</p>
+<p><img src="ptz.png"></p>
 <p>Теперь Вы можете управлять общающейся по Onvif камерой из vMix по сопряжению VISCA &lt;-&gt; Onvif благодаря voproxyd.</p>
     </body>
 </html>
