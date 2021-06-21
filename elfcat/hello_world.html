@@ -5,9 +5,8 @@
     <meta name='viewport' content='width=900, initial-scale=1'>
     <title>hello_world</title>
     <style>
-      * {
+      html {
         font-family: monospace;
-        font-size: 0.8rem;
       }
       #headertable {
         width: 100%;
@@ -47,7 +46,9 @@
         border: 1px solid;
         display: inline-block;
         word-break: break-word;
-        width: 47ch; /* 16 * (2 + 1) - 1*/
+        /* 16 bytes * (2 chars per byte + 1 space) - 1 final space + 1 due to a bug in chrome, where if
+         * you set width to X ch and put X characters, it may or may not wrap. */
+        width: 48ch;
       }
       #ascii {
         border: 1px solid;
@@ -181,7 +182,7 @@
         </table>
       </td>
       <td id='rightmenu'>
-        <p id='credits'>generated with elfcat 0.1.2</p>
+        <p id='credits'>generated with elfcat 0.1.3</p>
       </td>
     </table>
     <div id='offsets'></div>
