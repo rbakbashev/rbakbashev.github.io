@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset='utf-8'>
+    <meta name='viewport' content='width=900, initial-scale=1'>
     <title>hello_world</title>
     <style>
       * {
@@ -180,7 +181,7 @@
         </table>
       </td>
       <td id='rightmenu'>
-        <p id='credits'>generated with elfcat 0.1.0</p>
+        <p id='credits'>generated with elfcat 0.1.2</p>
       </td>
     </table>
     <div id='offsets'></div>
@@ -676,13 +677,15 @@ data............
       let fileLen = 808
       function populateOffsets(columns) {
           let rows = Math.ceil(fileLen / columns);
-          let container = document.getElementById('offsets');
+          let elements = "";
           var offset = 0;
 
           for (var i = 0; i < rows; ++i) {
-              container.innerHTML += offset.toString(16) + "</br>\n";
+              elements += offset.toString(16) + "</br>\n";
               offset += columns;
           }
+
+          document.getElementById('offsets').innerHTML = elements;
       }
       populateOffsets(16)
     </script>
@@ -770,6 +773,10 @@ data............
 
               addSvgArrow(conn[0], conn[1]);
           }
+      }
+
+      window.onresize = function() {
+          redrawArrows();
       }
 
       connect('#e_phoff', '#bin_phdr0');
