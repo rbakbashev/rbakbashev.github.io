@@ -116,14 +116,15 @@
         border: 1px solid;
         display: inline-block;
         word-break: break-word;
-        /* 16 bytes * (2 chars per byte + 1 space) - 1 final space + 1 due to a bug in chrome, where if
-         * you set width to X ch and put X characters, it may or may not wrap. */
-        width: 48ch;
+        /* 16 bytes * (2 chars per byte + 1 space) - 1 final space */
+        width: 47ch;
+        white-space: pre;
       }
       #ascii {
         border: 1px solid;
         display: inline-block;
         width: 16ch;
+        white-space: pre;
       }
       #vmap {
         border: 1px solid;
@@ -236,7 +237,7 @@
       <g id='arrows' stroke='black' stroke-width='1' marker-end='url(#arrowhead)'></g>
     </svg>
     <div id='rightmenu'>
-      <a id='credits' href='https://github.com/ruslashev/elfcat'>generated with elfcat 0.1.4</a>
+      <a id='credits' href='https://github.com/ruslashev/elfcat'>generated with elfcat 0.1.5</a>
       <button class='textbutton' id='settings_toggle'>Settings</button>
       <button class='textbutton' id='help_toggle'>Help</button>
       <div class='right_hidden' id='settings'>
@@ -269,9 +270,60 @@
       <tr id='info_ph'> <td>Program headers:</td> <td><span class='number' title='0x1' id='info_e_phnum'>1</span> * <span class='number' title='0x38' id='info_e_phentsize'>56</span> @ <span class='number' title='0x40' id='info_e_phoff'>64</span></td> </tr>
       <tr id='info_sh'> <td>Section headers:</td> <td><span class='number' title='0x6' id='info_e_shnum'>6</span> * <span class='number' title='0x40' id='info_e_shentsize'>64</span> @ <span class='number' title='0x1a8' id='info_e_shoff'>424</span></td> </tr>
     </table>
-    <div id='offsets'></div>
-    <div id='bytes'>
-<span class='ehdr'><span class='ident'><span id='magic'>7f &nbsp;E &nbsp;L &nbsp;F</span> <span id='class'>02</span> <span id='data'>01</span> <span id='ver'>01</span> <span id='abi'>00</span> <span id='abi_ver'>00</span> <span id='pad'>00 00 00 00 00 00 00</span></span>
+    <div id='offsets'>
+      0</br>
+      10</br>
+      20</br>
+      30</br>
+      40</br>
+      50</br>
+      60</br>
+      70</br>
+      80</br>
+      90</br>
+      a0</br>
+      b0</br>
+      c0</br>
+      d0</br>
+      e0</br>
+      f0</br>
+      100</br>
+      110</br>
+      120</br>
+      130</br>
+      140</br>
+      150</br>
+      160</br>
+      170</br>
+      180</br>
+      190</br>
+      1a0</br>
+      1b0</br>
+      1c0</br>
+      1d0</br>
+      1e0</br>
+      1f0</br>
+      200</br>
+      210</br>
+      220</br>
+      230</br>
+      240</br>
+      250</br>
+      260</br>
+      270</br>
+      280</br>
+      290</br>
+      2a0</br>
+      2b0</br>
+      2c0</br>
+      2d0</br>
+      2e0</br>
+      2f0</br>
+      300</br>
+      310</br>
+      320</br>
+    </div>
+    <div id='bytes'><span class='ehdr'><span class='ident'><span id='magic'>7f &nbsp;E &nbsp;L &nbsp;F</span> <span id='class'>02</span> <span id='data'>01</span> <span id='ver'>01</span> <span id='abi'>00</span> <span id='abi_ver'>00</span> <span id='pad'>00 00 00 00 00 00 00</span></span>
 <span id='e_type'>02 00</span> <span id='e_machine'>3e 00</span> <span id='e_version'>01 00 00 00</span> <span id='e_entry'>80 00 01 00 00 00 00 00</span>
 <span id='e_phoff'>40 00 00 00 00 00 00 00</span> <span id='e_shoff'>a8 01 00 00 00 00 00 00</span>
 <span id='e_flags'>00 00 00 00</span> <span id='e_ehsize'>40 00</span> <span id='e_phentsize'>38 00</span> <span id='e_phnum'>01 00</span> <span id='e_shentsize'>40 00</span> <span id='e_shnum'>06 00</span> <span id='e_shstrndx'>05 00</span></span>
@@ -322,8 +374,7 @@ a8 00 01 00 00 00 00 00 00 00 00 00 00 00 00 00
 <span class='sh_offset'>7e 01 00 00 00 00 00 00</span> <span class='sh_size'>27 00 00 00 00 00 00 00</span>
 <span class='sh_link'>00 00 00 00</span> <span class='sh_info'>00 00 00 00</span> <span class='sh_addralign'>01 00 00 00 00 00 00 00</span>
 <span class='sh_entsize'>00 00 00 00 00 00 00 00</span></span>     </div>
-    <div id='ascii'>
-.ELF............
+    <div id='ascii'>.ELF............
 ..&gt;.............
 @...............
 ....@.8...@.....
@@ -371,7 +422,7 @@ data............
 ................
 ................
 ................
-~.......'.......
+~.......&apos;.......
 ................
 ........    </div>
     <table id='sticky_table' cellspacing='0'>
@@ -774,9 +825,12 @@ data............
 
           document.getElementById('offsets').innerHTML = elements;
       }
-      populateOffsets(16)
     </script>
     <script type='text/javascript'>
+      const arrows = document.getElementById('arrows');
+      var connections = [];
+      var batchElems = '';
+
       function getAbsPosition(elem) {
           var x = 0, y = 0;
 
@@ -814,10 +868,8 @@ data............
           var x2 = off2.x;
           var y2 = off2.y;
 
-          document.getElementById('arrows').innerHTML += '<line '
-              + 'x1="' + x1 + '" y1="' + y1 + '" '
-              + 'x2="' + x2 + '" y2="' + y2 + '" '
-              + '/>';
+          batchElems += '<line x1="' + x1 + '" y1="' + y1 + '" '
+                            + 'x2="' + x2 + '" y2="' + y2 + '"/>';
       }
 
       function jumpToElem(elem) {
@@ -846,10 +898,14 @@ data............
           setJumpCallback(elem2, elem1);
       }
 
-      var connections = [];
-
       function clearArrows() {
-          document.getElementById('arrows').innerHTML = '';
+          batchElems = '';
+
+          arrows.innerHTML = '';
+      }
+
+      function pushArrowElems() {
+          arrows.innerHTML = batchElems;
       }
 
       function redrawArrows() {
@@ -860,6 +916,8 @@ data............
 
               addSvgArrow(conn[0], conn[1]);
           }
+
+          pushArrowElems();
       }
 
       window.onresize = function() {
@@ -875,12 +933,13 @@ data............
       connect('#bin_shdr3 > .sh_offset', '#bin_section3');
       connect('#bin_shdr4 > .sh_offset', '#bin_section4');
       connect('#bin_shdr5 > .sh_offset', '#bin_section5');
+      pushArrowElems();
     </script>
     <script type='text/javascript'>
       const settings = document.getElementById('settings');
       const help = document.getElementById('help');
-      const arrows = document.getElementById('arrows');
       const arrow_input = document.getElementById('arrow_opacity_range');
+      /* const arrows is reused from arrows.js */
 
       function toggleVisibility(elem) {
           if (elem.style.display === "none" || elem.style.display === "") {
