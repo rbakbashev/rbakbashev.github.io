@@ -97,20 +97,53 @@
       #desc {
         width: 250px;
       }
-      #struct_infotables {
-        padding-right: 0;
-      }
-      #data_infotables {
-        padding-left: 0;
+      .infotables {
+        padding: 0;
+        display: block;
       }
       .conceal {
         display: none;
         border: 1px solid #000;
         max-width: 600px;
+        margin-bottom: 1em;
+      }
+      .conceal div {
+        word-break: break-word;
+      }
+      .indirect .phdr_itable::after {
+        content: " (references this segment)";
+      }
+      .indirect .shdr_itable::after {
+        content: " (references this section)";
+      }
+      .phdr_itable::before {
+        content: "Program header";
+      }
+      .shdr_itable::before {
+        content: "Section header";
+      }
+      .phdr_itable {
+        text-align: left;
+      }
+      .shdr_itable {
+        text-align: left;
+      }
+      .segment_itable::before {
+        content: "Segment";
+      }
+      .section_itable::before {
+        content: "Section";
+      }
+      .segment_itable {
+        text-align: left;
+      }
+      .section_itable {
+        text-align: left;
       }
       #offsets {
         display: inline-block;
         text-align: right;
+        white-space: pre;
       }
       #bytes {
         border: 1px solid;
@@ -140,7 +173,7 @@
         position: sticky;
         top: 8px;
       }
-      #desc, .valign_top {
+      #desc, .itable {
         vertical-align: top;
       }
       .hover:hover {
@@ -237,7 +270,7 @@
       <g id='arrows' stroke='black' stroke-width='1' marker-end='url(#arrowhead)'></g>
     </svg>
     <div id='rightmenu'>
-      <a id='credits' href='https://github.com/ruslashev/elfcat'>generated with elfcat 0.1.5</a>
+      <a id='credits' href='https://github.com/ruslashev/elfcat'>generated with elfcat 0.1.6</a>
       <button class='textbutton' id='settings_toggle'>Settings</button>
       <button class='textbutton' id='help_toggle'>Help</button>
       <div class='right_hidden' id='settings'>
@@ -270,59 +303,57 @@
       <tr id='info_ph'> <td>Program headers:</td> <td><span class='number' title='0x1' id='info_e_phnum'>1</span> * <span class='number' title='0x38' id='info_e_phentsize'>56</span> @ <span class='number' title='0x40' id='info_e_phoff'>64</span></td> </tr>
       <tr id='info_sh'> <td>Section headers:</td> <td><span class='number' title='0x6' id='info_e_shnum'>6</span> * <span class='number' title='0x40' id='info_e_shentsize'>64</span> @ <span class='number' title='0x1a8' id='info_e_shoff'>424</span></td> </tr>
     </table>
-    <div id='offsets'>
-      0</br>
-      10</br>
-      20</br>
-      30</br>
-      40</br>
-      50</br>
-      60</br>
-      70</br>
-      80</br>
-      90</br>
-      a0</br>
-      b0</br>
-      c0</br>
-      d0</br>
-      e0</br>
-      f0</br>
-      100</br>
-      110</br>
-      120</br>
-      130</br>
-      140</br>
-      150</br>
-      160</br>
-      170</br>
-      180</br>
-      190</br>
-      1a0</br>
-      1b0</br>
-      1c0</br>
-      1d0</br>
-      1e0</br>
-      1f0</br>
-      200</br>
-      210</br>
-      220</br>
-      230</br>
-      240</br>
-      250</br>
-      260</br>
-      270</br>
-      280</br>
-      290</br>
-      2a0</br>
-      2b0</br>
-      2c0</br>
-      2d0</br>
-      2e0</br>
-      2f0</br>
-      300</br>
-      310</br>
-      320</br>
-    </div>
+    <div id='offsets'>0
+10
+20
+30
+40
+50
+60
+70
+80
+90
+a0
+b0
+c0
+d0
+e0
+f0
+100
+110
+120
+130
+140
+150
+160
+170
+180
+190
+1a0
+1b0
+1c0
+1d0
+1e0
+1f0
+200
+210
+220
+230
+240
+250
+260
+270
+280
+290
+2a0
+2b0
+2c0
+2d0
+2e0
+2f0
+300
+310
+320</div>
     <div id='bytes'><span class='ehdr'><span class='ident'><span id='magic'>7f &nbsp;E &nbsp;L &nbsp;F</span> <span id='class'>02</span> <span id='data'>01</span> <span id='ver'>01</span> <span id='abi'>00</span> <span id='abi_ver'>00</span> <span id='pad'>00 00 00 00 00 00 00</span></span>
 <span id='e_type'>02 00</span> <span id='e_machine'>3e 00</span> <span id='e_version'>01 00 00 00</span> <span id='e_entry'>80 00 01 00 00 00 00 00</span>
 <span id='e_phoff'>40 00 00 00 00 00 00 00</span> <span id='e_shoff'>a8 01 00 00 00 00 00 00</span>
@@ -424,21 +455,23 @@ data............
 ................
 ~.......&apos;.......
 ................
-........    </div>
+........</div>
     <table id='sticky_table' cellspacing='0'>
       <tr>
         <td id='desc'></td>
-        <td id='struct_infotables'>
-          <table class='conceal valign_top' id='info_phdr0'>
+        <td class='infotables'>
+          <table class='conceal itable' id='info_phdr0'>
+          <th colspan='2' class='phdr_itable'></th>
             <tr> <td>Type:</td> <td>LOAD</td> </tr>
             <tr> <td>Flags:</td> <td>RWX</td> </tr>
             <tr> <td>Offset in file:</td> <td><span class='number' title='128'>0x80</span></td> </tr>
             <tr> <td>Size in file:</td> <td><span class='number' title='0x36'>54</span></td> </tr>
             <tr> <td>Vaddr in memory:</td> <td><span class='number' title='65664'>0x10080</span></td> </tr>
-            <tr> <td>Size in memory:</td> <td><span class='number' title='54'>0x36</span></td> </tr>
+            <tr> <td>Size in memory:</td> <td><span class='number' title='0x36'>54</span></td> </tr>
             <tr> <td>Alignment:</td> <td><span class='number' title='16'>0x10</span></td> </tr>
           </table>
-          <table class='conceal valign_top' id='info_shdr0'>
+          <table class='conceal itable' id='info_shdr0'>
+          <th colspan='2' class='shdr_itable'></th>
             <tr> <td>Name:</td> <td></td> </tr>
             <tr> <td>Type:</td> <td>NULL</td> </tr>
             <tr> <td>Flags:</td> <td>0</td> </tr>
@@ -450,7 +483,8 @@ data............
             <tr> <td>Alignment:</td> <td><span class='number' title='0'>0x0</span></td> </tr>
             <tr> <td>Size of entries:</td> <td><span class='number' title='0x0'>0</span></td> </tr>
           </table>
-          <table class='conceal valign_top' id='info_shdr1'>
+          <table class='conceal itable' id='info_shdr1'>
+          <th colspan='2' class='shdr_itable'></th>
             <tr> <td>Name:</td> <td>.text</td> </tr>
             <tr> <td>Type:</td> <td>PROGBITS</td> </tr>
             <tr> <td>Flags:</td> <td>AX</td> </tr>
@@ -462,7 +496,8 @@ data............
             <tr> <td>Alignment:</td> <td><span class='number' title='16'>0x10</span></td> </tr>
             <tr> <td>Size of entries:</td> <td><span class='number' title='0x0'>0</span></td> </tr>
           </table>
-          <table class='conceal valign_top' id='info_shdr2'>
+          <table class='conceal itable' id='info_shdr2'>
+          <th colspan='2' class='shdr_itable'></th>
             <tr> <td>Name:</td> <td>.data</td> </tr>
             <tr> <td>Type:</td> <td>PROGBITS</td> </tr>
             <tr> <td>Flags:</td> <td>WA</td> </tr>
@@ -474,7 +509,8 @@ data............
             <tr> <td>Alignment:</td> <td><span class='number' title='4'>0x4</span></td> </tr>
             <tr> <td>Size of entries:</td> <td><span class='number' title='0x0'>0</span></td> </tr>
           </table>
-          <table class='conceal valign_top' id='info_shdr3'>
+          <table class='conceal itable' id='info_shdr3'>
+          <th colspan='2' class='shdr_itable'></th>
             <tr> <td>Name:</td> <td>.symtab</td> </tr>
             <tr> <td>Type:</td> <td>SYMTAB</td> </tr>
             <tr> <td>Flags:</td> <td>0</td> </tr>
@@ -486,7 +522,8 @@ data............
             <tr> <td>Alignment:</td> <td><span class='number' title='8'>0x8</span></td> </tr>
             <tr> <td>Size of entries:</td> <td><span class='number' title='0x18'>24</span></td> </tr>
           </table>
-          <table class='conceal valign_top' id='info_shdr4'>
+          <table class='conceal itable' id='info_shdr4'>
+          <th colspan='2' class='shdr_itable'></th>
             <tr> <td>Name:</td> <td>.strtab</td> </tr>
             <tr> <td>Type:</td> <td>STRTAB</td> </tr>
             <tr> <td>Flags:</td> <td>0</td> </tr>
@@ -498,7 +535,8 @@ data............
             <tr> <td>Alignment:</td> <td><span class='number' title='1'>0x1</span></td> </tr>
             <tr> <td>Size of entries:</td> <td><span class='number' title='0x0'>0</span></td> </tr>
           </table>
-          <table class='conceal valign_top' id='info_shdr5'>
+          <table class='conceal itable' id='info_shdr5'>
+          <th colspan='2' class='shdr_itable'></th>
             <tr> <td>Name:</td> <td>.shstrtab</td> </tr>
             <tr> <td>Type:</td> <td>STRTAB</td> </tr>
             <tr> <td>Flags:</td> <td>0</td> </tr>
@@ -511,30 +549,36 @@ data............
             <tr> <td>Size of entries:</td> <td><span class='number' title='0x0'>0</span></td> </tr>
           </table>
         </td>
-        <td id='data_infotables'>
-          <table class='conceal valign_top' id='info_segment0'>
-            <tr> <td>Segment type:</td> <td>LOAD</td> </tr>
+        <td class='infotables'>
+          <table class='conceal itable' id='info_segment0'>
+          <th colspan='2' class='segment_itable'></th>
+            <tr> <td>Type:</td> <td>LOAD</td> </tr>
             <tr> <td>Size in file:</td> <td><span class='number' title='0x36'>54</span></td> </tr>
             <tr> <td>Size in memory:</td> <td><span class='number' title='0x36'>54</span></td> </tr>
           </table>
-          <table class='conceal valign_top' id='info_section0'>
-            <tr> <td>Section type:</td> <td>NULL</td> </tr>
+          <table class='conceal itable' id='info_section0'>
+          <th colspan='2' class='section_itable'></th>
+            <tr> <td>Type:</td> <td>NULL</td> </tr>
             <tr> <td>Size:</td> <td><span class='number' title='0x0'>0</span></td> </tr>
           </table>
-          <table class='conceal valign_top' id='info_section1'>
-            <tr> <td>Section type:</td> <td>PROGBITS</td> </tr>
+          <table class='conceal itable' id='info_section1'>
+          <th colspan='2' class='section_itable'></th>
+            <tr> <td>Type:</td> <td>PROGBITS</td> </tr>
             <tr> <td>Size:</td> <td><span class='number' title='0x25'>37</span></td> </tr>
           </table>
-          <table class='conceal valign_top' id='info_section2'>
-            <tr> <td>Section type:</td> <td>PROGBITS</td> </tr>
+          <table class='conceal itable' id='info_section2'>
+          <th colspan='2' class='section_itable'></th>
+            <tr> <td>Type:</td> <td>PROGBITS</td> </tr>
             <tr> <td>Size:</td> <td><span class='number' title='0xe'>14</span></td> </tr>
           </table>
-          <table class='conceal valign_top' id='info_section3'>
-            <tr> <td>Section type:</td> <td>SYMTAB</td> </tr>
+          <table class='conceal itable' id='info_section3'>
+          <th colspan='2' class='section_itable'></th>
+            <tr> <td>Type:</td> <td>SYMTAB</td> </tr>
             <tr> <td>Size:</td> <td><span class='number' title='0xa8'>168</span></td> </tr>
           </table>
-          <table class='conceal valign_top' id='info_section4'>
-            <tr> <td>Section type:</td> <td>STRTAB</td> </tr>
+          <table class='conceal itable' id='info_section4'>
+          <th colspan='2' class='section_itable'></th>
+            <tr> <td>Type:</td> <td>STRTAB</td> </tr>
             <tr> <td>Size:</td> <td><span class='number' title='0x1e'>30</span></td> </tr>
             <tr><td><br></td></tr>
             <tr>
@@ -549,8 +593,9 @@ data............
               </td>
             </tr>
           </table>
-          <table class='conceal valign_top' id='info_section5'>
-            <tr> <td>Section type:</td> <td>STRTAB</td> </tr>
+          <table class='conceal itable' id='info_section5'>
+          <th colspan='2' class='section_itable'></th>
+            <tr> <td>Type:</td> <td>STRTAB</td> </tr>
             <tr> <td>Size:</td> <td><span class='number' title='0x27'>39</span></td> </tr>
             <tr><td><br></td></tr>
             <tr>
@@ -570,7 +615,7 @@ data............
       </tr>
     </table>
     <script type='text/javascript'>
-      var color = "#ee9";
+      let color = "#ee9";
 
       function addPairHighlighting(elem, depElem) {
           elem.addEventListener("mouseenter", function(event) {
@@ -585,8 +630,8 @@ data............
       }
 
       function highlightIds(primaryId, secondaryId) {
-          var primaryElem = document.getElementById(primaryId);
-          var secondaryElem = document.getElementById(secondaryId);
+          let primaryElem = document.getElementById(primaryId);
+          let secondaryElem = document.getElementById(secondaryId);
 
           if (primaryElem === null || secondaryElem === null) {
               return;
@@ -695,17 +740,17 @@ data............
       }
 
       function iterateParents(el) {
-          var txt = "";
-          var keywords = [];
+          let txt = "";
+          let keywords = [];
 
           do {
               if (el.id !== undefined) {
                   keywords.push(el.id);
               }
 
-              var classList = el.classList;
+              let classList = el.classList;
               if (classList !== undefined) {
-                  for (var i = 0; i < classList.length; ++i) {
+                  for (let i = 0; i < classList.length; ++i) {
                       keywords.push(classList[i]);
                   }
               }
@@ -716,15 +761,15 @@ data............
           // fix all occurences where segments and sections overlap.
           // once again we are relying on programming by which sections are always inside segments.
           // also, this is O(n^2) ugly.
-          var i = 1;
+          let i = 1;
           while (i < keywords.length) {
               if (keywords[i] !== 'segment') {
                   ++i;
                   continue;
               }
 
-              var have_section_before = false;
-              var j = 0;
+              let have_section_before = false;
+              let j = 0;
               for (; j < i; ++j) {
                   if (keywords[j] == 'section') {
                       have_section_before = true;
@@ -740,8 +785,8 @@ data............
               }
           }
 
-          for (var i = 0; i < keywords.length; ++i) {
-              var keyword = keywords[i];
+          for (let i = 0; i < keywords.length; ++i) {
+              let keyword = keywords[i];
 
               if (isValid(keyword)) {
                   if (txt === "") {
@@ -756,9 +801,9 @@ data............
       }
 
       document.addEventListener("mouseover", function (e) {
-          var event = e || window.event;
+          let event = e || window.event;
 
-          var target = event.target || event.srcElement;
+          let target = event.target || event.srcElement;
 
           if (!target.classList.contains('legend_rect')) {
               document.getElementById('desc').innerHTML = iterateParents(target);
@@ -766,48 +811,72 @@ data............
       }, false);
     </script>
     <script type='text/javascript'>
+      let prevShownTables = [];
+
       function listOfParents(el) {
-          var list = [el.id];
+          let list = [el.id];
 
           while (el.tagName !== "HTML") {
               el = el.parentNode;
 
-              // use unshift() instead of push() because we are stupid and have
-              // an assumption that section spans are inside segment spans
-              // so that break; in loop below doesn't have to go away.
               list.unshift(el.id);
           }
 
           return list;
       }
 
-      var prevTableId;
+      function hidePreviousTables() {
+          for (let i = 0; i < prevShownTables.length; ++i) {
+              prevShownTables[i].style.display = "none";
+              prevShownTables[i].classList.remove("indirect");
+          }
+      }
+
+      function showIfMatches(id, prefix, newPrefix, indirect = false) {
+          if (!id.startsWith(prefix)) {
+              return;
+          }
+
+          let tableId = id.replace(prefix, newPrefix);
+          let table = document.getElementById(tableId);
+
+          if (table === null) {
+              return;
+          }
+
+          table.style.display = "block";
+
+          if (indirect) {
+              table.classList.add("indirect");
+          } else {
+              table.classList.remove("indirect");
+          }
+
+          prevShownTables.push(table);
+      }
 
       document.addEventListener("mouseover", function (e) {
-          var event = e || window.event;
-          var target = event.target || event.srcElement;
-          var prefix = 'bin_';
+          let event = e || window.event;
+          let target = event.target || event.srcElement;
+          let parents = listOfParents(target);
+          let cleared = false;
+          const prefix = 'bin_';
 
-          parents = listOfParents(target);
+          for (let i = 0; i < parents.length; i++) {
+              let id = parents[i];
 
-          for (var i = 0; i < parents.length; i++) {
-              var id = parents[i];
-
-              if (id.startsWith(prefix)) {
-                  var tableId = id.replace(prefix, "info_");
-                  var target = document.getElementById(tableId);
-
-                  if (target !== null) {
-                      if (prevTableId) {
-                          prevTableId.style.display = "none";
-                      }
-
-                      target.style.display = "block";
-                      prevTableId = target;
-
-                      break;
-                  }
+              if (!id.startsWith(prefix)) {
+                  continue;
               }
+
+              if (!cleared) {
+                  cleared = true;
+                  hidePreviousTables();
+              }
+
+              showIfMatches(id, prefix, "info_");
+              showIfMatches(id, "bin_segment", "info_phdr", true);
+              showIfMatches(id, "bin_section", "info_shdr", true);
           }
       }, false);
     </script>
@@ -816,9 +885,9 @@ data............
       function populateOffsets(columns) {
           let rows = Math.ceil(fileLen / columns);
           let elements = "";
-          var offset = 0;
+          let offset = 0;
 
-          for (var i = 0; i < rows; ++i) {
+          for (let i = 0; i < rows; ++i) {
               elements += offset.toString(16) + "</br>\n";
               offset += columns;
           }
@@ -828,11 +897,11 @@ data............
     </script>
     <script type='text/javascript'>
       const arrows = document.getElementById('arrows');
-      var connections = [];
-      var batchElems = '';
+      let connections = [];
+      let batchElems = '';
 
       function getAbsPosition(elem) {
-          var x = 0, y = 0;
+          let x = 0, y = 0;
 
           do {
               x += elem.offsetLeft || 0;
@@ -848,7 +917,7 @@ data............
       }
 
       function getBoundingBoxSizes(elem) {
-          var rect = elem.getBoundingClientRect();
+          let rect = elem.getBoundingClientRect();
 
           return {
               w: rect.width || elem.offsetWidth,
@@ -857,16 +926,16 @@ data............
       }
 
       function addSvgArrow(elem1, elem2) {
-          var off1 = getAbsPosition(elem1);
-          var off2 = getAbsPosition(elem2);
+          let off1 = getAbsPosition(elem1);
+          let off2 = getAbsPosition(elem2);
 
-          var bb1 = getBoundingBoxSizes(elem1);
+          let bb1 = getBoundingBoxSizes(elem1);
 
-          var x1 = off1.x + bb1.w / 2;
-          var y1 = off1.y;
+          let x1 = off1.x + bb1.w / 2;
+          let y1 = off1.y;
 
-          var x2 = off2.x;
-          var y2 = off2.y;
+          let x2 = off2.x;
+          let y2 = off2.y;
 
           batchElems += '<line x1="' + x1 + '" y1="' + y1 + '" '
                             + 'x2="' + x2 + '" y2="' + y2 + '"/>';
@@ -883,8 +952,8 @@ data............
       }
 
       function connect(sel1, sel2) {
-          var elem1 = document.querySelector(sel1);
-          var elem2 = document.querySelector(sel2);
+          let elem1 = document.querySelector(sel1);
+          let elem2 = document.querySelector(sel2);
 
           if (elem1 === null || elem2 === null) {
               return;
@@ -911,8 +980,8 @@ data............
       function redrawArrows() {
           clearArrows();
 
-          for (var i = 0; i < connections.length; ++i) {
-              var conn = connections[i];
+          for (let i = 0; i < connections.length; ++i) {
+              let conn = connections[i];
 
               addSvgArrow(conn[0], conn[1]);
           }
