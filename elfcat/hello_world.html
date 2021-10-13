@@ -270,7 +270,7 @@
       <g id='arrows' stroke='black' stroke-width='1' marker-end='url(#arrowhead)'></g>
     </svg>
     <div id='rightmenu'>
-      <a id='credits' href='https://github.com/ruslashev/elfcat'>generated with elfcat 0.1.7</a>
+      <a id='credits' href='https://github.com/ruslashev/elfcat'>generated with elfcat 0.1.8</a>
       <button class='textbutton' id='settings_toggle'>Settings</button>
       <button class='textbutton' id='help_toggle'>Help</button>
       <div class='right_hidden' id='settings'>
@@ -292,16 +292,16 @@
       </div>
     </div>
     <table>
-      <tr id='info_file_name'> <td>File name:</td> <td>hello_world</td> </tr>
-      <tr id='info_file_size'> <td>File size:</td> <td>808 B</td> </tr>
-      <tr id='info_class'> <td>Object class:</td> <td>64-bit</td> </tr>
-      <tr id='info_data'> <td>Data encoding:</td> <td>Little endian</td> </tr>
-      <tr id='info_abi'> <td>ABI:</td> <td>SysV</td> </tr>
-      <tr id='info_e_type'> <td>Type:</td> <td>Executable file (EXEC)</td> </tr>
-      <tr id='info_e_machine'> <td>Architecture:</td> <td>x86-64</td> </tr>
-      <tr id='info_e_entry'> <td>Entrypoint:</td> <td><span class='number' title='65664'>0x10080</span></td> </tr>
-      <tr id='info_ph'> <td>Program headers:</td> <td><span class='number' title='0x1' id='info_e_phnum'>1</span> * <span class='number' title='0x38' id='info_e_phentsize'>56</span> @ <span class='number' title='0x40' id='info_e_phoff'>64</span></td> </tr>
-      <tr id='info_sh'> <td>Section headers:</td> <td><span class='number' title='0x6' id='info_e_shnum'>6</span> * <span class='number' title='0x40' id='info_e_shentsize'>64</span> @ <span class='number' title='0x1a8' id='info_e_shoff'>424</span></td> </tr>
+      <tr class='fileinfo_file_name'> <td>File name:</td> <td>hello_world</td> </tr>
+      <tr class='fileinfo_file_size'> <td>File size:</td> <td>808 B</td> </tr>
+      <tr class='fileinfo_class'> <td>Object class:</td> <td>64-bit</td> </tr>
+      <tr class='fileinfo_data'> <td>Data encoding:</td> <td>Little endian</td> </tr>
+      <tr class='fileinfo_abi'> <td>ABI:</td> <td>SysV</td> </tr>
+      <tr class='fileinfo_e_type'> <td>Type:</td> <td>Executable file (EXEC)</td> </tr>
+      <tr class='fileinfo_e_machine'> <td>Architecture:</td> <td>x86-64</td> </tr>
+      <tr class='fileinfo_e_entry'> <td>Entrypoint:</td> <td><span class='number' title='65664'>0x10080</span></td> </tr>
+      <tr class='fileinfo_ph'> <td>Program headers:</td> <td><span title='0x1' class='number fileinfo_e_phnum'>1</span> * <span title='0x38' class='number fileinfo_e_phentsize'>56</span> @ <span title='0x40' class='number fileinfo_e_phoff'>64</span></td> </tr>
+      <tr class='fileinfo_sh'> <td>Section headers:</td> <td><span title='0x6' class='number fileinfo_e_shnum'>6</span> * <span title='0x40' class='number fileinfo_e_shentsize'>64</span> @ <span title='0x1a8' class='number fileinfo_e_shoff'>424</span></td> </tr>
     </table>
     <div id='offsets'>0
 10
@@ -354,18 +354,18 @@ f0
 300
 310
 320</div>
-    <div id='bytes'><span class='ehdr'><span class='ident'><span id='magic'>7f &nbsp;E &nbsp;L &nbsp;F</span> <span id='class'>02</span> <span id='data'>01</span> <span id='ver'>01</span> <span id='abi'>00</span> <span id='abi_ver'>00</span> <span id='pad'>00 00 00 00 00 00 00</span></span>
-<span id='e_type'>02 00</span> <span id='e_machine'>3e 00</span> <span id='e_version'>01 00 00 00</span> <span id='e_entry'>80 00 01 00 00 00 00 00</span>
-<span id='e_phoff'>40 00 00 00 00 00 00 00</span> <span id='e_shoff'>a8 01 00 00 00 00 00 00</span>
-<span id='e_flags'>00 00 00 00</span> <span id='e_ehsize'>40 00</span> <span id='e_phentsize'>38 00</span> <span id='e_phnum'>01 00</span> <span id='e_shentsize'>40 00</span> <span id='e_shnum'>06 00</span> <span id='e_shstrndx'>05 00</span></span>
-<span id='bin_phdr0' class='phdr'><span class='p_type'>01 00 00 00</span> <span class='p_flags'>07 00 00 00</span> <span class='p_offset'>80 00 00 00 00 00 00 00</span>
+    <div id='bytes'><span class='ehdr'><span class='ident'><span class='magic'>7f &nbsp;E &nbsp;L &nbsp;F</span> <span class='class'>02</span> <span class='data'>01</span> <span class='ver'>01</span> <span class='abi'>00</span> <span class='abi_ver'>00</span> <span class='pad'>00 00 00 00 00 00 00</span></span>
+<span class='e_type'>02 00</span> <span class='e_machine'>3e 00</span> <span class='e_version'>01 00 00 00</span> <span class='e_entry'>80 00 01 00 00 00 00 00</span>
+<span class='e_phoff'>40 00 00 00 00 00 00 00</span> <span class='e_shoff'>a8 01 00 00 00 00 00 00</span>
+<span class='e_flags'>00 00 00 00</span> <span class='e_ehsize'>40 00</span> <span class='e_phentsize'>38 00</span> <span class='e_phnum'>01 00</span> <span class='e_shentsize'>40 00</span> <span class='e_shnum'>06 00</span> <span class='e_shstrndx'>05 00</span></span>
+<span class='bin_phdr0 phdr'><span class='p_type'>01 00 00 00</span> <span class='p_flags'>07 00 00 00</span> <span class='p_offset'>80 00 00 00 00 00 00 00</span>
 <span class='p_vaddr'>80 00 01 00 00 00 00 00</span> <span class='p_paddr'>80 00 01 00 00 00 00 00</span>
 <span class='p_filesz'>36 00 00 00 00 00 00 00</span> <span class='p_memsz'>36 00 00 00 00 00 00 00</span>
 <span class='p_align'>10 00 00 00 00 00 00 00</span></span> 00 00 00 00 00 00 00 00
-<span id='bin_segment0' class='segment'><span id='bin_section1' class='section hover'>b8 01 00 00 00 bf 01 00 00 00 48 be a8 00 01 00
+<span class='bin_segment0 segment'><span class='bin_section1 section hover'>b8 01 00 00 00 bf 01 00 00 00 48 be a8 00 01 00
 00 00 00 00 ba 0e 00 00 00 0f 05 b8 3c 00 00 00
-48 31 ff 0f 05</span> 00 00 00 <span id='bin_section2' class='section hover'>48 65 6c 6c 6f 2c 20 77
-6f 72 6c 64 21 0a</span></span> 00 00 <span id='bin_section3' class='section hover'>00 00 00 00 00 00 00 00
+48 31 ff 0f 05</span> 00 00 00 <span class='bin_section2 section hover'>48 65 6c 6c 6f 2c 20 77
+6f 72 6c 64 21 0a</span></span> 00 00 <span class='bin_section3 section hover'>00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
 00 00 00 00 03 00 01 00 80 00 01 00 00 00 00 00
 00 00 00 00 00 00 00 00 00 00 00 00 03 00 02 00
@@ -376,31 +376,31 @@ a8 00 01 00 00 00 00 00 00 00 00 00 00 00 00 00
 13 00 00 00 00 00 f1 ff 0e 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00 17 00 00 00 10 00 01 00
 80 00 01 00 00 00 00 00 00 00 00 00 00 00 00 00</span>
-<span id='bin_section4' class='section hover'>00 68 65 6c 6c 6f 5f 77 6f 72 6c 64 2e 73 00 6d
-73 67 00 6c 65 6e 00 5f 73 74 61 72 74 00</span> <span id='bin_section5' class='section hover'>00 2e
+<span class='bin_section4 section hover'>00 68 65 6c 6c 6f 5f 77 6f 72 6c 64 2e 73 00 6d
+73 67 00 6c 65 6e 00 5f 73 74 61 72 74 00</span> <span class='bin_section5 section hover'>00 2e
 73 79 6d 74 61 62 00 2e 73 74 72 74 61 62 00 2e
 73 68 73 74 72 74 61 62 00 2e 74 65 78 74 00 2e
-64 61 74 61 00</span> 00 00 00 <span id='bin_shdr0' class='shdr'><span class='sh_name'>00 00 00 00</span> <span class='sh_type'>00 00 00 00</span>
+64 61 74 61 00</span> 00 00 00 <span class='bin_shdr0 shdr'><span class='sh_name'>00 00 00 00</span> <span class='sh_type'>00 00 00 00</span>
 <span class='sh_flags'>00 00 00 00 00 00 00 00</span> <span class='sh_addr'>00 00 00 00 00 00 00 00</span>
 <span class='sh_offset'>00 00 00 00 00 00 00 00</span> <span class='sh_size'>00 00 00 00 00 00 00 00</span>
 <span class='sh_link'>00 00 00 00</span> <span class='sh_info'>00 00 00 00</span> <span class='sh_addralign'>00 00 00 00 00 00 00 00</span>
-<span class='sh_entsize'>00 00 00 00 00 00 00 00</span></span> <span id='bin_shdr1' class='shdr'><span class='sh_name'>1b 00 00 00</span> <span class='sh_type'>01 00 00 00</span>
+<span class='sh_entsize'>00 00 00 00 00 00 00 00</span></span> <span class='bin_shdr1 shdr'><span class='sh_name'>1b 00 00 00</span> <span class='sh_type'>01 00 00 00</span>
 <span class='sh_flags'>06 00 00 00 00 00 00 00</span> <span class='sh_addr'>80 00 01 00 00 00 00 00</span>
 <span class='sh_offset'>80 00 00 00 00 00 00 00</span> <span class='sh_size'>25 00 00 00 00 00 00 00</span>
 <span class='sh_link'>00 00 00 00</span> <span class='sh_info'>00 00 00 00</span> <span class='sh_addralign'>10 00 00 00 00 00 00 00</span>
-<span class='sh_entsize'>00 00 00 00 00 00 00 00</span></span> <span id='bin_shdr2' class='shdr'><span class='sh_name'>21 00 00 00</span> <span class='sh_type'>01 00 00 00</span>
+<span class='sh_entsize'>00 00 00 00 00 00 00 00</span></span> <span class='bin_shdr2 shdr'><span class='sh_name'>21 00 00 00</span> <span class='sh_type'>01 00 00 00</span>
 <span class='sh_flags'>03 00 00 00 00 00 00 00</span> <span class='sh_addr'>a8 00 01 00 00 00 00 00</span>
 <span class='sh_offset'>a8 00 00 00 00 00 00 00</span> <span class='sh_size'>0e 00 00 00 00 00 00 00</span>
 <span class='sh_link'>00 00 00 00</span> <span class='sh_info'>00 00 00 00</span> <span class='sh_addralign'>04 00 00 00 00 00 00 00</span>
-<span class='sh_entsize'>00 00 00 00 00 00 00 00</span></span> <span id='bin_shdr3' class='shdr'><span class='sh_name'>01 00 00 00</span> <span class='sh_type'>02 00 00 00</span>
+<span class='sh_entsize'>00 00 00 00 00 00 00 00</span></span> <span class='bin_shdr3 shdr'><span class='sh_name'>01 00 00 00</span> <span class='sh_type'>02 00 00 00</span>
 <span class='sh_flags'>00 00 00 00 00 00 00 00</span> <span class='sh_addr'>00 00 00 00 00 00 00 00</span>
 <span class='sh_offset'>b8 00 00 00 00 00 00 00</span> <span class='sh_size'>a8 00 00 00 00 00 00 00</span>
 <span class='sh_link'>04 00 00 00</span> <span class='sh_info'>06 00 00 00</span> <span class='sh_addralign'>08 00 00 00 00 00 00 00</span>
-<span class='sh_entsize'>18 00 00 00 00 00 00 00</span></span> <span id='bin_shdr4' class='shdr'><span class='sh_name'>09 00 00 00</span> <span class='sh_type'>03 00 00 00</span>
+<span class='sh_entsize'>18 00 00 00 00 00 00 00</span></span> <span class='bin_shdr4 shdr'><span class='sh_name'>09 00 00 00</span> <span class='sh_type'>03 00 00 00</span>
 <span class='sh_flags'>00 00 00 00 00 00 00 00</span> <span class='sh_addr'>00 00 00 00 00 00 00 00</span>
 <span class='sh_offset'>60 01 00 00 00 00 00 00</span> <span class='sh_size'>1e 00 00 00 00 00 00 00</span>
 <span class='sh_link'>00 00 00 00</span> <span class='sh_info'>00 00 00 00</span> <span class='sh_addralign'>01 00 00 00 00 00 00 00</span>
-<span class='sh_entsize'>00 00 00 00 00 00 00 00</span></span> <span id='bin_shdr5' class='shdr'><span class='sh_name'>11 00 00 00</span> <span class='sh_type'>03 00 00 00</span>
+<span class='sh_entsize'>00 00 00 00 00 00 00 00</span></span> <span class='bin_shdr5 shdr'><span class='sh_name'>11 00 00 00</span> <span class='sh_type'>03 00 00 00</span>
 <span class='sh_flags'>00 00 00 00 00 00 00 00</span> <span class='sh_addr'>00 00 00 00 00 00 00 00</span>
 <span class='sh_offset'>7e 01 00 00 00 00 00 00</span> <span class='sh_size'>27 00 00 00 00 00 00 00</span>
 <span class='sh_link'>00 00 00 00</span> <span class='sh_info'>00 00 00 00</span> <span class='sh_addralign'>01 00 00 00 00 00 00 00</span>
@@ -472,6 +472,7 @@ data............
           </table>
           <table class='conceal itable' id='info_shdr0'>
           <th colspan='2' class='shdr_itable'></th>
+            <tr> <td>Index:</td> <td>0</td> </tr>
             <tr> <td>Name:</td> <td></td> </tr>
             <tr> <td>Type:</td> <td>NULL</td> </tr>
             <tr> <td>Flags:</td> <td>0</td> </tr>
@@ -485,6 +486,7 @@ data............
           </table>
           <table class='conceal itable' id='info_shdr1'>
           <th colspan='2' class='shdr_itable'></th>
+            <tr> <td>Index:</td> <td>1</td> </tr>
             <tr> <td>Name:</td> <td>.text</td> </tr>
             <tr> <td>Type:</td> <td>PROGBITS</td> </tr>
             <tr> <td>Flags:</td> <td>AX</td> </tr>
@@ -498,6 +500,7 @@ data............
           </table>
           <table class='conceal itable' id='info_shdr2'>
           <th colspan='2' class='shdr_itable'></th>
+            <tr> <td>Index:</td> <td>2</td> </tr>
             <tr> <td>Name:</td> <td>.data</td> </tr>
             <tr> <td>Type:</td> <td>PROGBITS</td> </tr>
             <tr> <td>Flags:</td> <td>WA</td> </tr>
@@ -511,6 +514,7 @@ data............
           </table>
           <table class='conceal itable' id='info_shdr3'>
           <th colspan='2' class='shdr_itable'></th>
+            <tr> <td>Index:</td> <td>3</td> </tr>
             <tr> <td>Name:</td> <td>.symtab</td> </tr>
             <tr> <td>Type:</td> <td>SYMTAB</td> </tr>
             <tr> <td>Flags:</td> <td>0</td> </tr>
@@ -524,6 +528,7 @@ data............
           </table>
           <table class='conceal itable' id='info_shdr4'>
           <th colspan='2' class='shdr_itable'></th>
+            <tr> <td>Index:</td> <td>4</td> </tr>
             <tr> <td>Name:</td> <td>.strtab</td> </tr>
             <tr> <td>Type:</td> <td>STRTAB</td> </tr>
             <tr> <td>Flags:</td> <td>0</td> </tr>
@@ -537,6 +542,7 @@ data............
           </table>
           <table class='conceal itable' id='info_shdr5'>
           <th colspan='2' class='shdr_itable'></th>
+            <tr> <td>Index:</td> <td>5</td> </tr>
             <tr> <td>Name:</td> <td>.shstrtab</td> </tr>
             <tr> <td>Type:</td> <td>STRTAB</td> </tr>
             <tr> <td>Flags:</td> <td>0</td> </tr>
@@ -629,34 +635,37 @@ data............
           }, false);
       }
 
-      function highlightIds(primaryId, secondaryId) {
-          let primaryElem = document.getElementById(primaryId);
-          let secondaryElem = document.getElementById(secondaryId);
+      function highlightClasses(primaryClass, secondaryClass) {
+          let primaryElems = document.getElementsByClassName(primaryClass);
+          let secondaryElems = document.getElementsByClassName(secondaryClass);
 
-          if (primaryElem === null || secondaryElem === null) {
+          if (primaryElems.length === 0 || secondaryElems.length === 0) {
               return;
           }
+
+          let primaryElem = primaryElems[0];
+          let secondaryElem = secondaryElems[0];
 
           addPairHighlighting(primaryElem, secondaryElem);
           addPairHighlighting(secondaryElem, primaryElem);
       }
 
-      highlightIds('class', 'info_class')
-      highlightIds('data', 'info_data')
-      highlightIds('abi', 'info_abi')
-      highlightIds('abi_ver', 'info_abi_ver')
-      highlightIds('e_type', 'info_e_type')
-      highlightIds('e_machine', 'info_e_machine')
-      highlightIds('e_entry', 'info_e_entry')
-      highlightIds('e_phoff', 'info_e_phoff')
-      highlightIds('e_shoff', 'info_e_shoff')
-      highlightIds('e_flags', 'info_e_flags')
-      highlightIds('e_ehsize', 'info_e_ehsize')
-      highlightIds('e_phentsize', 'info_e_phentsize')
-      highlightIds('e_phnum', 'info_e_phnum')
-      highlightIds('e_shentsize', 'info_e_shentsize')
-      highlightIds('e_shnum', 'info_e_shnum')
-      highlightIds('e_shstrndx', 'info_e_shstrndx')
+      highlightClasses('fileinfo_class', 'class')
+      highlightClasses('fileinfo_data', 'data')
+      highlightClasses('fileinfo_abi', 'abi')
+      highlightClasses('fileinfo_abi_ver', 'abi_ver')
+      highlightClasses('fileinfo_e_type', 'e_type')
+      highlightClasses('fileinfo_e_machine', 'e_machine')
+      highlightClasses('fileinfo_e_entry', 'e_entry')
+      highlightClasses('fileinfo_e_phoff', 'e_phoff')
+      highlightClasses('fileinfo_e_shoff', 'e_shoff')
+      highlightClasses('fileinfo_e_flags', 'e_flags')
+      highlightClasses('fileinfo_e_ehsize', 'e_ehsize')
+      highlightClasses('fileinfo_e_phentsize', 'e_phentsize')
+      highlightClasses('fileinfo_e_phnum', 'e_phnum')
+      highlightClasses('fileinfo_e_shentsize', 'e_shentsize')
+      highlightClasses('fileinfo_e_shnum', 'e_shnum')
+      highlightClasses('fileinfo_e_shstrndx', 'e_shstrndx')
     </script>
     <script type='text/javascript'>
       let label = document.getElementById('desc')
@@ -709,6 +718,10 @@ data............
       }
       let separator = "<br>&#x2193<br>";
 
+      function stripFileInfoPrefix(str) {
+          return str.replace("fileinfo_", "");
+      }
+
       function stripInfoPrefix(str) {
           return str.replace("info_", "");
       }
@@ -717,26 +730,28 @@ data............
           return str.replace("bin_", "");
       }
 
-      function hasDescription(id) {
-          return descriptions[id] !== undefined
-              || descriptions[stripInfoPrefix(id)] !== undefined
-              || descriptions[stripBinPrefix(id)] !== undefined;
-      }
-
-      function isValid(id) {
-          return id !== "" && hasDescription(id);
-      }
-
-      function formatDesc(id) {
-          if (descriptions[id] !== undefined) {
-              return descriptions[id];
+      function getDesc(cl) {
+          if (cl === "") {
+              return null;
           }
 
-          if (descriptions[stripBinPrefix(id)] !== undefined) {
-              return descriptions[stripBinPrefix(id)];
+          if (descriptions[cl] !== undefined) {
+              return descriptions[cl];
           }
 
-          return descriptions[stripInfoPrefix(id)];
+          if (descriptions[stripFileInfoPrefix(cl)] !== undefined) {
+              return descriptions[stripFileInfoPrefix(cl)];
+          }
+
+          if (descriptions[stripInfoPrefix(cl)] !== undefined) {
+              return descriptions[stripInfoPrefix(cl)];
+          }
+
+          if (descriptions[stripBinPrefix(cl)] !== undefined) {
+              return descriptions[stripBinPrefix(cl)];
+          }
+
+          return null;
       }
 
       function iterateParents(el) {
@@ -744,10 +759,6 @@ data............
           let keywords = [];
 
           do {
-              if (el.id !== undefined) {
-                  keywords.push(el.id);
-              }
-
               let classList = el.classList;
               if (classList !== undefined) {
                   for (let i = 0; i < classList.length; ++i) {
@@ -787,12 +798,13 @@ data............
 
           for (let i = 0; i < keywords.length; ++i) {
               let keyword = keywords[i];
+              let desc = getDesc(keyword);
 
-              if (isValid(keyword)) {
+              if (desc !== null) {
                   if (txt === "") {
-                      txt = formatDesc(keyword);
+                      txt = desc;
                   } else {
-                      txt = formatDesc(keyword) + separator + txt;
+                      txt = desc + separator + txt;
                   }
               }
           }
@@ -813,13 +825,23 @@ data............
     <script type='text/javascript'>
       let prevShownTables = [];
 
+      function getFirstClass(el) {
+          let cls = el.classList[0];
+
+          if (cls === undefined) {
+              return "";
+          } else {
+              return cls;
+          }
+      }
+
       function listOfParents(el) {
-          let list = [el.id];
+          let list = [getFirstClass(el)];
 
           while (el.tagName !== "HTML") {
               el = el.parentNode;
 
-              list.unshift(el.id);
+              list.unshift(getFirstClass(el));
           }
 
           return list;
@@ -832,12 +854,12 @@ data............
           }
       }
 
-      function showIfMatches(id, prefix, newPrefix, indirect = false) {
-          if (!id.startsWith(prefix)) {
+      function showIfMatches(cl, prefix, newPrefix, indirect = false) {
+          if (!cl.startsWith(prefix)) {
               return;
           }
 
-          let tableId = id.replace(prefix, newPrefix);
+          let tableId = cl.replace(prefix, newPrefix);
           let table = document.getElementById(tableId);
 
           if (table === null) {
@@ -863,9 +885,9 @@ data............
           const prefix = 'bin_';
 
           for (let i = 0; i < parents.length; i++) {
-              let id = parents[i];
+              let cl = parents[i];
 
-              if (!id.startsWith(prefix)) {
+              if (!cl.startsWith(prefix)) {
                   continue;
               }
 
@@ -874,9 +896,9 @@ data............
                   hidePreviousTables();
               }
 
-              showIfMatches(id, prefix, "info_");
-              showIfMatches(id, "bin_segment", "info_phdr", true);
-              showIfMatches(id, "bin_section", "info_shdr", true);
+              showIfMatches(cl, prefix, "info_");
+              showIfMatches(cl, "bin_segment", "info_phdr", true);
+              showIfMatches(cl, "bin_section", "info_shdr", true);
           }
       }, false);
     </script>
@@ -993,15 +1015,16 @@ data............
           redrawArrows();
       }
 
-      connect('#e_phoff', '#bin_phdr0');
-      connect('#e_shoff', '#bin_shdr0');
-      connect('#bin_phdr0 > .p_offset', '#bin_segment0');
-      connect('#bin_shdr0 > .sh_offset', '#bin_section0');
-      connect('#bin_shdr1 > .sh_offset', '#bin_section1');
-      connect('#bin_shdr2 > .sh_offset', '#bin_section2');
-      connect('#bin_shdr3 > .sh_offset', '#bin_section3');
-      connect('#bin_shdr4 > .sh_offset', '#bin_section4');
-      connect('#bin_shdr5 > .sh_offset', '#bin_section5');
+      connect('.e_phoff', '.bin_phdr0');
+      connect('.e_shoff', '.bin_shdr0');
+      connect('.bin_phdr0 > .p_offset', '.bin_segment0');
+      connect('.bin_shdr0 > .sh_offset', '.bin_section0');
+      connect('.bin_shdr1 > .sh_offset', '.bin_section1');
+      connect('.bin_shdr2 > .sh_offset', '.bin_section2');
+      connect('.bin_shdr3 > .sh_offset', '.bin_section3');
+      connect('.bin_shdr3 > .sh_link', '.bin_shdr4');
+      connect('.bin_shdr4 > .sh_offset', '.bin_section4');
+      connect('.bin_shdr5 > .sh_offset', '.bin_section5');
       pushArrowElems();
     </script>
     <script type='text/javascript'>
