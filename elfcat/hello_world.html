@@ -270,7 +270,7 @@
       <g id='arrows' stroke='black' stroke-width='1' marker-end='url(#arrowhead)'></g>
     </svg>
     <div id='rightmenu'>
-      <a id='credits' href='https://github.com/rbakbashev/elfcat'>generated with elfcat 0.1.8</a>
+      <a id='credits' href='https://github.com/rbakbashev/elfcat'>generated with elfcat 0.1.9</a>
       <button class='textbutton' id='settings_toggle'>Settings</button>
       <button class='textbutton' id='help_toggle'>Help</button>
       <div class='right_hidden' id='settings'>
@@ -293,7 +293,7 @@
     </div>
     <table>
       <tr class='fileinfo_file_name'> <td>File name:</td> <td>hello_world</td> </tr>
-      <tr class='fileinfo_file_size'> <td>File size:</td> <td>808 B</td> </tr>
+      <tr class='fileinfo_file_size'> <td>File size:</td> <td>760 B</td> </tr>
       <tr class='fileinfo_class'> <td>Object class:</td> <td>64-bit</td> </tr>
       <tr class='fileinfo_data'> <td>Data encoding:</td> <td>Little endian</td> </tr>
       <tr class='fileinfo_abi'> <td>ABI:</td> <td>SysV</td> </tr>
@@ -301,7 +301,7 @@
       <tr class='fileinfo_e_machine'> <td>Architecture:</td> <td>x86-64</td> </tr>
       <tr class='fileinfo_e_entry'> <td>Entrypoint:</td> <td><span class='number' title='65664'>0x10080</span></td> </tr>
       <tr class='fileinfo_ph'> <td>Program headers:</td> <td><span title='0x1' class='number fileinfo_e_phnum'>1</span> * <span title='0x38' class='number fileinfo_e_phentsize'>56</span> @ <span title='0x40' class='number fileinfo_e_phoff'>64</span></td> </tr>
-      <tr class='fileinfo_sh'> <td>Section headers:</td> <td><span title='0x6' class='number fileinfo_e_shnum'>6</span> * <span title='0x40' class='number fileinfo_e_shentsize'>64</span> @ <span title='0x1a8' class='number fileinfo_e_shoff'>424</span></td> </tr>
+      <tr class='fileinfo_sh'> <td>Section headers:</td> <td><span title='0x6' class='number fileinfo_e_shnum'>6</span> * <span title='0x40' class='number fileinfo_e_shentsize'>64</span> @ <span title='0x178' class='number fileinfo_e_shoff'>376</span></td> </tr>
     </table>
     <div id='offsets'>0
 10
@@ -350,13 +350,10 @@ f0
 2c0
 2d0
 2e0
-2f0
-300
-310
-320</div>
+2f0</div>
     <div id='bytes'><span class='ehdr'><span class='ident'><span class='magic'>7f &nbsp;E &nbsp;L &nbsp;F</span> <span class='class'>02</span> <span class='data'>01</span> <span class='ver'>01</span> <span class='abi'>00</span> <span class='abi_ver'>00</span> <span class='pad'>00 00 00 00 00 00 00</span></span>
 <span class='e_type'>02 00</span> <span class='e_machine'>3e 00</span> <span class='e_version'>01 00 00 00</span> <span class='e_entry'>80 00 01 00 00 00 00 00</span>
-<span class='e_phoff'>40 00 00 00 00 00 00 00</span> <span class='e_shoff'>a8 01 00 00 00 00 00 00</span>
+<span class='e_phoff'>40 00 00 00 00 00 00 00</span> <span class='e_shoff'>78 01 00 00 00 00 00 00</span>
 <span class='e_flags'>00 00 00 00</span> <span class='e_ehsize'>40 00</span> <span class='e_phentsize'>38 00</span> <span class='e_phnum'>01 00</span> <span class='e_shentsize'>40 00</span> <span class='e_shnum'>06 00</span> <span class='e_shstrndx'>05 00</span></span>
 <span class='bin_phdr0 phdr'><span class='p_type'>01 00 00 00</span> <span class='p_flags'>07 00 00 00</span> <span class='p_offset'>80 00 00 00 00 00 00 00</span>
 <span class='p_vaddr'>80 00 01 00 00 00 00 00</span> <span class='p_paddr'>80 00 01 00 00 00 00 00</span>
@@ -367,9 +364,6 @@ f0
 48 31 ff 0f 05</span> 00 00 00 <span class='bin_section2 section hover'>48 65 6c 6c 6f 2c 20 77
 6f 72 6c 64 21 0a</span></span> 00 00 <span class='bin_section3 section hover'>00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-00 00 00 00 03 00 01 00 80 00 01 00 00 00 00 00
-00 00 00 00 00 00 00 00 00 00 00 00 03 00 02 00
-a8 00 01 00 00 00 00 00 00 00 00 00 00 00 00 00
 01 00 00 00 04 00 f1 ff 00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00 0f 00 00 00 00 00 02 00
 a8 00 01 00 00 00 00 00 00 00 00 00 00 00 00 00
@@ -394,20 +388,20 @@ a8 00 01 00 00 00 00 00 00 00 00 00 00 00 00 00
 <span class='sh_link'>00 00 00 00</span> <span class='sh_info'>00 00 00 00</span> <span class='sh_addralign'>04 00 00 00 00 00 00 00</span>
 <span class='sh_entsize'>00 00 00 00 00 00 00 00</span></span> <span class='bin_shdr3 shdr'><span class='sh_name'>01 00 00 00</span> <span class='sh_type'>02 00 00 00</span>
 <span class='sh_flags'>00 00 00 00 00 00 00 00</span> <span class='sh_addr'>00 00 00 00 00 00 00 00</span>
-<span class='sh_offset'>b8 00 00 00 00 00 00 00</span> <span class='sh_size'>a8 00 00 00 00 00 00 00</span>
-<span class='sh_link'>04 00 00 00</span> <span class='sh_info'>06 00 00 00</span> <span class='sh_addralign'>08 00 00 00 00 00 00 00</span>
+<span class='sh_offset'>b8 00 00 00 00 00 00 00</span> <span class='sh_size'>78 00 00 00 00 00 00 00</span>
+<span class='sh_link'>04 00 00 00</span> <span class='sh_info'>04 00 00 00</span> <span class='sh_addralign'>08 00 00 00 00 00 00 00</span>
 <span class='sh_entsize'>18 00 00 00 00 00 00 00</span></span> <span class='bin_shdr4 shdr'><span class='sh_name'>09 00 00 00</span> <span class='sh_type'>03 00 00 00</span>
 <span class='sh_flags'>00 00 00 00 00 00 00 00</span> <span class='sh_addr'>00 00 00 00 00 00 00 00</span>
-<span class='sh_offset'>60 01 00 00 00 00 00 00</span> <span class='sh_size'>1e 00 00 00 00 00 00 00</span>
+<span class='sh_offset'>30 01 00 00 00 00 00 00</span> <span class='sh_size'>1e 00 00 00 00 00 00 00</span>
 <span class='sh_link'>00 00 00 00</span> <span class='sh_info'>00 00 00 00</span> <span class='sh_addralign'>01 00 00 00 00 00 00 00</span>
 <span class='sh_entsize'>00 00 00 00 00 00 00 00</span></span> <span class='bin_shdr5 shdr'><span class='sh_name'>11 00 00 00</span> <span class='sh_type'>03 00 00 00</span>
 <span class='sh_flags'>00 00 00 00 00 00 00 00</span> <span class='sh_addr'>00 00 00 00 00 00 00 00</span>
-<span class='sh_offset'>7e 01 00 00 00 00 00 00</span> <span class='sh_size'>27 00 00 00 00 00 00 00</span>
+<span class='sh_offset'>4e 01 00 00 00 00 00 00</span> <span class='sh_size'>27 00 00 00 00 00 00 00</span>
 <span class='sh_link'>00 00 00 00</span> <span class='sh_info'>00 00 00 00</span> <span class='sh_addralign'>01 00 00 00 00 00 00 00</span>
 <span class='sh_entsize'>00 00 00 00 00 00 00 00</span></span></div>
     <div id='ascii'>.ELF............
 ..&gt;.............
-@...............
+@.......x.......
 ....@.8...@.....
 ................
 ................
@@ -417,9 +411,6 @@ a8 00 01 00 00 00 00 00 00 00 00 00 00 00 00 00
 ............&lt;...
 H1......Hello,.w
 orld!...........
-................
-................
-................
 ................
 ................
 ................
@@ -445,15 +436,15 @@ data............
 ................
 ................
 ................
+........x.......
 ................
 ................
 ................
-................
-`...............
-................
+0...............
 ................
 ................
-~.......&apos;.......
+................
+N.......&apos;.......
 ................
 ........</div>
     <table id='sticky_table' cellspacing='0'>
@@ -520,7 +511,7 @@ data............
             <tr> <td>Flags:</td> <td>0</td> </tr>
             <tr> <td>Vaddr in memory:</td> <td><span class='number' title='0'>0x0</span></td> </tr>
             <tr> <td>Offset in file:</td> <td><span class='number' title='184'>0xb8</span></td> </tr>
-            <tr> <td>Size in file:</td> <td><span class='number' title='0xa8'>168</span></td> </tr>
+            <tr> <td>Size in file:</td> <td><span class='number' title='0x78'>120</span></td> </tr>
             <tr> <td>Linked section:</td> <td>4</td> </tr>
             <tr> <td>Extra info:</td> <td><span class='number' title='0x4'>4</span></td> </tr>
             <tr> <td>Alignment:</td> <td><span class='number' title='8'>0x8</span></td> </tr>
@@ -533,7 +524,7 @@ data............
             <tr> <td>Type:</td> <td>STRTAB</td> </tr>
             <tr> <td>Flags:</td> <td>0</td> </tr>
             <tr> <td>Vaddr in memory:</td> <td><span class='number' title='0'>0x0</span></td> </tr>
-            <tr> <td>Offset in file:</td> <td><span class='number' title='352'>0x160</span></td> </tr>
+            <tr> <td>Offset in file:</td> <td><span class='number' title='304'>0x130</span></td> </tr>
             <tr> <td>Size in file:</td> <td><span class='number' title='0x1e'>30</span></td> </tr>
             <tr> <td>Linked section:</td> <td>0</td> </tr>
             <tr> <td>Extra info:</td> <td><span class='number' title='0x0'>0</span></td> </tr>
@@ -547,7 +538,7 @@ data............
             <tr> <td>Type:</td> <td>STRTAB</td> </tr>
             <tr> <td>Flags:</td> <td>0</td> </tr>
             <tr> <td>Vaddr in memory:</td> <td><span class='number' title='0'>0x0</span></td> </tr>
-            <tr> <td>Offset in file:</td> <td><span class='number' title='382'>0x17e</span></td> </tr>
+            <tr> <td>Offset in file:</td> <td><span class='number' title='334'>0x14e</span></td> </tr>
             <tr> <td>Size in file:</td> <td><span class='number' title='0x27'>39</span></td> </tr>
             <tr> <td>Linked section:</td> <td>0</td> </tr>
             <tr> <td>Extra info:</td> <td><span class='number' title='0x0'>0</span></td> </tr>
@@ -580,7 +571,7 @@ data............
           <table class='conceal itable' id='info_section3'>
           <th colspan='2' class='section_itable'></th>
             <tr> <td>Type:</td> <td>SYMTAB</td> </tr>
-            <tr> <td>Size:</td> <td><span class='number' title='0xa8'>168</span></td> </tr>
+            <tr> <td>Size:</td> <td><span class='number' title='0x78'>120</span></td> </tr>
           </table>
           <table class='conceal itable' id='info_section4'>
           <th colspan='2' class='section_itable'></th>
@@ -903,7 +894,7 @@ data............
       }, false);
     </script>
     <script type='text/javascript'>
-      let fileLen = 808
+      let fileLen = 760
       function populateOffsets(columns) {
           let rows = Math.ceil(fileLen / columns);
           let elements = "";
